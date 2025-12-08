@@ -7,7 +7,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "useDefineForClassFields": true,
-    "lib": ["ES2023","DOM","DOM.Iterable"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "allowJs": true,
     "checkJs": false,
     "baseUrl": ".",
@@ -19,7 +19,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["node_modules"]
