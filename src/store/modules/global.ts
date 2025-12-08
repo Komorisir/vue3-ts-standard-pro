@@ -2,27 +2,31 @@ import { defineStore } from 'pinia'
 import { store } from '@/store'
 import { StoreEnum } from '@/constants/enum/store'
 import { ref } from 'vue'
+import { RouteName } from '@/constants/enum/route'
 
 /**
  * global store
  */
 export const useGlobalStore = defineStore(StoreEnum.GLOBAL, () => {
   // state
-  const count = ref(0)
+  /**
+   * 当前选中的tab
+   */
+  const currentTab = ref(RouteName.ADD)
 
   // getters
   // const isEmpty = computed(() => imageList.value.length === 0)
 
   // actions
-  const addCount = () => {
-    count.value++
+  const setCurrentTab = (tab: RouteName) => {
+    currentTab.value = tab
   }
 
   return {
     // state
-    count,
+    currentTab,
     // actions
-    addCount,
+    setCurrentTab,
   }
 })
 
