@@ -1,5 +1,5 @@
 {
-  "name": "vue3-ts-standard-pro",
+  "name": "image-editor",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,6 +12,7 @@
     "format": "prettier -w . "
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "@icon-park/vue-next": "^1.4.2",
     "ant-design-vue": "^4.2.6",
     "pinia": "^3.0.4",
