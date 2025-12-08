@@ -6,7 +6,7 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 /** 忽略文件 */
 const ignores = {
-  ignores: ['dist', 'public', 'node_modules', '*.config.*', '.prettierrc.cjs'],
+  ignores: ['dist', 'public', 'node_modules', '*.config.*', '.prettierrc.cjs', '.stylelintrc.cjs'],
 }
 /** 全局生效配置 */
 const globalConfig = {
@@ -28,7 +28,7 @@ const vueConfig = {
     },
   },
   rules: {
-    'no-console': 'warn',
+    'no-console': 'off',
     'vue/no-mutating-props': 'error',
     'no-debugger': 'warn',
     'vue/multi-word-component-names': 'off',
@@ -37,13 +37,14 @@ const vueConfig = {
     'vue/no-deprecated-slot-attribute': 'off',
     'vue/no-deprecated-slot-scope-attribute': 'off',
     'vue/no-deprecated-v-is': 'off',
+    'vue/no-multiple-template-root': 'off',
   },
 }
 /** ts配置 */
 const tsConfig = {
   files: ['**/*.ts'],
   rules: {
-    'no-console': 'warn',
+    'no-console': 'off',
     'prettier/prettier': 'error',
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',

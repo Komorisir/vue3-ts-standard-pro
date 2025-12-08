@@ -1,5 +1,10 @@
 import { createApp } from 'vue'
-import './style.css'
+import './style.less'
 import App from './App.vue'
+import 'ant-design-vue/dist/reset.css'
+import { setupStore } from '@/store'
+import '@icon-park/vue-next/styles/index.css'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+setupStore(app)
+app.mount('#app')
