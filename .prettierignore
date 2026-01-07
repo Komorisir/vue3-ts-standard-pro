@@ -5,7 +5,7 @@ node_modules
 .vscode
 electron
 package-lock.json
-pnpm-lock.json
+pnpm-lock.yaml
 yarn.lock
 /public/*
 prettier.config.js

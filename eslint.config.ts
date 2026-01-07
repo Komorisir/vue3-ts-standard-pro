@@ -3,10 +3,11 @@ import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 /** 忽略文件 */
 const ignores = {
-  ignores: ['dist', 'public', 'node_modules', '*.config.*', '.prettierrc.cjs', '.stylelintrc.cjs'],
+  ignores: ['dist', 'public', 'node_modules', '*.config.*', '.prettierrc.json', '.stylelintrc.cjs'],
 }
 /** 全局生效配置 */
 const globalConfig = {
@@ -42,13 +43,15 @@ const vueConfig = {
 }
 /** ts配置 */
 const tsConfig = {
-  files: ['**/*.ts'],
+  files: ['**/*.ts', '**/*.vue'],
   rules: {
     'no-console': 'off',
     'prettier/prettier': 'error',
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unsafe-function-type': 'off',
   },
 }
 
@@ -58,16 +61,19 @@ export default [
 
   globalConfig,
 
-  vueConfig,
-
-  tsConfig,
-
   /** js推荐配置 */
   pluginJs.configs.recommended,
   /** ts推荐配置 */
   ...tseslint.configs.recommended,
   /** vue推荐配置 */
   ...pluginVue.configs['flat/essential'],
+
+  vueConfig,
+
+  tsConfig,
+
   /** Prettier推荐配置 */
   eslintPluginPrettierRecommended,
+  /** 关闭所有与 Prettier 冲突的格式化规则（必须在最后） */
+  eslintConfigPrettier,
 ]

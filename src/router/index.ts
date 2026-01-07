@@ -7,22 +7,37 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: `/${RouteName.ADD}`,
+      redirect: '/home',
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: () => import('@/views/Home/HomeView.vue'),
+    },
+    {
+      path: '/editor',
+      name: 'Editor',
+      component: () => import('@/views/Editor/EditorView.vue'),
     },
     {
       path: `/${RouteName.ADD}`,
-      component: () => import('@/view/Add/AddView.vue'),
+      component: () => import('@/views/Add/AddView.vue'),
       name: RouteName.ADD,
     },
     {
       path: `/${RouteName.ADJUST}`,
-      component: () => import('@/view/Adjust/AdjustView.vue'),
+      component: () => import('@/views/Adjust/AdjustView.vue'),
       name: RouteName.ADJUST,
     },
     {
       path: `/${RouteName.TEXT}`,
-      component: () => import('@/view/Text/TextView.vue'),
+      component: () => import('@/views/Text/TextView.vue'),
       name: RouteName.TEXT,
+    },
+    {
+      path: '/empty',
+      component: () => import('@/views/Empty/EmptyView.vue'),
+      name: 'Empty',
     },
   ],
 })

@@ -5,7 +5,7 @@
 </template>
 
 <style scoped lang="less">
-.view-footer {
-  width: 280px;
-}
+// .view-footer {
+//   width: 280px;
+// }
 </style>

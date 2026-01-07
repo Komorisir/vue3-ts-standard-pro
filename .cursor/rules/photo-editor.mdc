@@ -1,0 +1,509 @@
+---
+alwaysApply: true
+---
+
+# 项目背景：Vue3 + PixiJS 专业图形编辑器
+
+你是一位精通 2D 图形编辑器、WebGL 和 Pixi.js 的高级前端工程师。
+你的目标是使用 Vue 3、TypeScript 和 Pixi.js (v8) 构建一个功能完整、性能优异、界面美观的专业级图形/图片编辑器。
+
+## Pixi.js (v8) 源码地址
+
+Pixi.js (v8) 源码地址：`D:\repertories\advancedDemo\pixi-project\pixijs` (相对路径：`../pixijs`)
+有了Pixi.js (v8) 源码的加持，你现在就是pixi.js开发的大师，总是能够给出最优的设计方案
+
+## 技术栈规则
+
+- **框架**: Vue 3 (Composition API, `<script setup lang="ts">`)。
+- **语言**: TypeScript (启用严格模式 Strict mode)。
+- **构建工具**: Vite。
+- **渲染引擎**: Pixi.js v8 (注意：v8 引入了异步 `init`，新的 Graphics API 以及性能改进)。
+- **UI 库**: Ant Design Vue (用于编辑器外部 UI 框架)。
+- **语言**: TypeScript 5.9+
+- **构建工具**: Vite (rolldown-vite)
+- **状态管理**: Pinia 3.0+
+- **路由**: Vue Router 4.6+
+- **样式**: Less 4.4+
+- **图标**: @icon-park/vue-next, @ant-design/icons-vue
+- **代码规范**: ESLint + Prettier + Stylelint
+- **Git Hooks**: Husky + Commitlint + lint-staged
+
+## 架构与设计模式
+
+### 1. 核心设计理念
+
+- **核心与 UI 分离**: `src/editor` (内核) 负责所有画布逻辑，不依赖 Vue；`src/components` (UI) 负责界面交互，通过 API 调用内核。
+- **数据驱动**: 画布状态应可序列化（JSON），便于保存和加载。
+- **事件驱动**: 模块间通过事件总线解耦。
+
+### 2. 完整目录结构规范
+
+以下是专业图形编辑器的完整目录结构（要求符合模块化、可扩展、职责分离的原则）
+
+```
+vue3-ts-standard-pro/
+├── public/                              # 静态资源
+│   ├── fonts/                           # 字体文件
+│   ├── icons/                           # 图标资源
+│   └── vite.svg                         # 网站图标
+│
+├── src/
+│   ├── editor/                          # 【核心模块】编辑器内核（不依赖 Vue）
+│   │   ├── core/                        # 核心基础类
+│   │   │   ├── Editor.ts                # 编辑器主类（应用入口）
+│   │   │   ├── Application.ts           # Pixi Application 封装
+│   │   │   ├── EventEmitter.ts          # 事件总线基类
+│   │   │   └── Disposable.ts            # 资源释放基类
+│   │   │
+│   │   ├── managers/                    # 管理器模块
+│   │   │   ├── ViewportManager.ts       # 视口管理（缩放、平移、坐标转换）
+│   │   │   ├── LayerManager.ts          # 图层管理（增删改查、排序）
+│   │   │   ├── SelectionManager.ts      # 选择管理（多选、框选）
+│   │   │   ├── ToolManager.ts           # 工具管理（工具切换、状态管理）
+│   │   │   ├── CommandManager.ts        # 命令管理（历史记录、撤销重做）
+│   │   │   ├── HistoryManager.ts        # 历史栈管理
+│   │   │   ├── InteractionManager.ts    # 交互管理（事件分发）
+│   │   │   ├── AssetManager.ts          # 资源管理（图片、字体加载）
+│   │   │   ├── PluginManager.ts         # 插件管理（扩展机制）
+│   │   │   └── SnapshotManager.ts       # 快照管理（自动保存、版本控制）
+│   │   │
+│   │   ├── nodes/                       # 节点/对象模块（图形元素）
+│   │   │   ├── base/                    # 基类
+│   │   │   │   ├── BaseNode.ts          # 节点基类（通用属性和方法）
+│   │   │   │   ├── INode.ts             # 节点接口定义
+│   │   │   │   └── NodeFactory.ts       # 节点工厂（创建节点）
+│   │   │   ├── shapes/                  # 形状节点
+│   │   │   │   ├── RectNode.ts          # 矩形
+│   │   │   │   ├── CircleNode.ts        # 圆形
+│   │   │   │   ├── EllipseNode.ts       # 椭圆
+│   │   │   │   ├── PolygonNode.ts       # 多边形
+│   │   │   │   ├── LineNode.ts          # 直线
+│   │   │   │   ├── PathNode.ts          # 路径（贝塞尔曲线）
+│   │   │   │   └── StarNode.ts          # 星形
+│   │   │   ├── ImageNode.ts             # 图片节点
+│   │   │   ├── TextNode.ts              # 文本节点
+│   │   │   ├── GroupNode.ts             # 组合节点（容器）
+│   │   │   ├── SpriteNode.ts            # 精灵节点
+│   │   │   └── MaskNode.ts              # 蒙版节点
+│   │   │
+│   │   ├── tools/                       # 工具模块
+│   │   │   ├── base/                    # 工具基类
+│   │   │   │   ├── BaseTool.ts          # 工具基类
+│   │   │   │   └── ITool.ts             # 工具接口
+│   │   │   ├── SelectTool.ts            # 选择工具（点选、框选）
+│   │   │   ├── HandTool.ts              # 抓手工具（画布移动）
+│   │   │   ├── DrawTool.ts              # 绘制工具基类
+│   │   │   ├── shapes/                  # 形状绘制工具
+│   │   │   │   ├── RectTool.ts          # 矩形绘制
+│   │   │   │   ├── CircleTool.ts        # 圆形绘制
+│   │   │   │   ├── LineTool.ts          # 直线绘制
+│   │   │   │   └── PathTool.ts          # 路径绘制（钢笔工具）
+│   │   │   ├── TextTool.ts              # 文本工具
+│   │   │   ├── CropTool.ts              # 裁剪工具
+│   │   │   ├── EraserTool.ts            # 橡皮擦工具
+│   │   │   ├── BrushTool.ts             # 画笔工具
+│   │   │   ├── FillTool.ts              # 填充工具（油漆桶）
+│   │   │   └── TransformTool.ts         # 变换工具（控制柄）
+│   │   │
+│   │   ├── commands/                    # 命令模块（命令模式）
+│   │   │   ├── base/                    # 命令基类
+│   │   │   │   ├── Command.ts           # 命令基类
+│   │   │   │   └── ICommand.ts          # 命令接口
+│   │   │   ├── AddCommand.ts            # 添加对象命令
+│   │   │   ├── RemoveCommand.ts         # 删除对象命令
+│   │   │   ├── TransformCommand.ts      # 变换命令（移动、缩放、旋转）
+│   │   │   ├── UpdateCommand.ts         # 更新属性命令
+│   │   │   ├── GroupCommand.ts          # 组合命令
+│   │   │   ├── UngroupCommand.ts        # 取消组合命令
+│   │   │   ├── LayerCommand.ts          # 图层操作命令
+│   │   │   ├── OrderCommand.ts          # 层级顺序命令
+│   │   │   └── BatchCommand.ts          # 批量命令（宏命令）
+│   │   │
+│   │   ├── transforms/                  # 变换模块
+│   │   │   ├── TransformControls.ts     # 变换控制器（8点控制柄）
+│   │   │   ├── BoundingBox.ts           # 包围盒计算
+│   │   │   ├── Anchor.ts                # 锚点管理
+│   │   │   └── ConstraintManager.ts     # 约束管理（等比缩放、吸附）
+│   │   │
+│   │   ├── layers/                      # 图层模块
+│   │   │   ├── Layer.ts                 # 图层类
+│   │   │   ├── LayerGroup.ts            # 图层组
+│   │   │   └── LayerTree.ts             # 图层树结构
+│   │   │
+│   │   ├── filters/                     # 滤镜/效果模块
+│   │   │   ├── BlurFilter.ts            # 模糊滤镜
+│   │   │   ├── BrightnessFilter.ts      # 亮度调整
+│   │   │   ├── ContrastFilter.ts        # 对比度调整
+│   │   │   ├── SaturationFilter.ts      # 饱和度调整
+│   │   │   ├── HueFilter.ts             # 色相调整
+│   │   │   └── FilterManager.ts         # 滤镜管理器
+│   │   │
+│   │   ├── guides/                      # 辅助功能模块
+│   │   │   ├── GridManager.ts           # 网格管理
+│   │   │   ├── RulerManager.ts          # 标尺管理
+│   │   │   ├── GuidelineManager.ts      # 参考线管理
+│   │   │   ├── SnapManager.ts           # 吸附管理（对齐、智能参考线）
+│   │   │   └── MeasureManager.ts        # 测量工具
+│   │   │
+│   │   ├── serialization/               # 序列化模块
+│   │   │   ├── Serializer.ts            # 序列化器（保存）
+│   │   │   ├── Deserializer.ts          # 反序列化器（加载）
+│   │   │   ├── Exporter.ts              # 导出器（PNG/JPG/SVG/PDF）
+│   │   │   └── Importer.ts              # 导入器（PSD/AI/Figma）
+│   │   │
+│   │   ├── utils/                       # 编辑器工具函数
+│   │   │   ├── math.ts                  # 数学计算（矩阵、向量）
+│   │   │   ├── geometry.ts              # 几何计算（碰撞检测、相交判断）
+│   │   │   ├── color.ts                 # 颜色工具
+│   │   │   ├── dom.ts                   # DOM 工具
+│   │   │   └── performance.ts           # 性能监控
+│   │   │
+│   │   ├── types/                       # 编辑器类型定义
+│   │   │   ├── editor.ts                # 编辑器类型
+│   │   │   ├── node.ts                  # 节点类型
+│   │   │   ├── tool.ts                  # 工具类型
+│   │   │   ├── command.ts               # 命令类型
+│   │   │   ├── layer.ts                 # 图层类型
+│   │   │   └── event.ts                 # 事件类型
+│   │   │
+│   │   └── index.ts                     # 编辑器模块统一导出
+│   │
+│   ├── components/                      # 【UI 模块】Vue 组件（依赖 editor）
+│   │   ├── layout/                      # 布局组件
+│   │   │   ├── Header/                  # 顶部导航栏
+│   │   │   │   ├── ViewHeader.vue       # 头部组件
+│   │   │   │   ├── MenuBar.vue          # 菜单栏（文件、编辑、视图等）
+│   │   │   │   ├── Toolbar.vue          # 工具栏（常用操作按钮）
+│   │   │   │   └── BreadCrumb.vue       # 面包屑导航
+│   │   │   ├── SiderBar/                # 左侧边栏
+│   │   │   │   ├── SiderBar.vue         # 侧边栏容器
+│   │   │   │   ├── ToolPanel.vue        # 工具面板（工具选择）
+│   │   │   │   ├── LayerPanel.vue       # 图层面板
+│   │   │   │   └── AssetPanel.vue       # 资源面板（素材库）
+│   │   │   ├── Content/                 # 主内容区域
+│   │   │   │   ├── MainContent.vue      # 主内容容器
+│   │   │   │   ├── Canvas.vue           # 画布组件（Pixi 挂载点）
+│   │   │   │   ├── CanvasControls.vue   # 画布控制器（缩放比例、视图模式）
+│   │   │   │   └── Minimap.vue          # 缩略图导航
+│   │   │   ├── RightPanel/              # 右侧属性面板
+│   │   │   │   ├── PropertyPanel.vue    # 属性面板容器
+│   │   │   │   ├── TransformPanel.vue   # 变换属性（位置、大小、旋转）
+│   │   │   │   ├── AppearancePanel.vue  # 外观属性（颜色、边框、阴影）
+│   │   │   │   ├── TextPanel.vue        # 文本属性（字体、大小、行距）
+│   │   │   │   ├── FilterPanel.vue      # 滤镜属性
+│   │   │   │   └── EffectPanel.vue      # 效果属性（混合模式、不透明度）
+│   │   │   ├── Footer/                  # 底部状态栏
+│   │   │   │   ├── ViewFooter.vue       # 底部容器
+│   │   │   │   ├── StatusBar.vue        # 状态栏（坐标、缩放比例）
+│   │   │   │   └── Timeline.vue         # 时间轴（动画编辑）
+│   │   │   └── index.ts                 # 布局组件导出
+│   │   │
+│   │   ├── editor/                      # 编辑器专用组件
+│   │   │   ├── ColorPicker/             # 颜色选择器
+│   │   │   │   ├── ColorPicker.vue      # 颜色选择器主组件
+│   │   │   │   ├── ColorPanel.vue       # 颜色面板
+│   │   │   │   ├── GradientEditor.vue   # 渐变编辑器
+│   │   │   │   └── EyeDropper.vue       # 取色器
+│   │   │   ├── ContextMenu/             # 右键菜单
+│   │   │   │   ├── ContextMenu.vue      # 右键菜单组件
+│   │   │   │   └── MenuItem.vue         # 菜单项
+│   │   │   ├── Modal/                   # 弹窗组件
+│   │   │   │   ├── ExportModal.vue      # 导出弹窗
+│   │   │   │   ├── ImportModal.vue      # 导入弹窗
+│   │   │   │   ├── ResizeModal.vue      # 调整画布大小
+│   │   │   │   └── SettingsModal.vue    # 设置弹窗
+│   │   │   ├── Slider/                  # 滑块组件
+│   │   │   │   └── Slider.vue           # 数值滑块
+│   │   │   ├── IconButton/              # 图标按钮
+│   │   │   │   └── IconButton.vue       # 工具按钮
+│   │   │   └── index.ts                 # 编辑器组件导出
+│   │   │
+│   │   └── common/                      # 通用组件
+│   │       ├── Loading.vue              # 加载组件
+│   │       ├── Toast.vue                # 提示组件
+│   │       └── Popover.vue              # 气泡卡片
+│   │
+│   ├── views/                           # 页面视图
+│   │   ├── Home/                        # 首页
+│   │   │   └── HomeView.vue             # 项目管理（新建、打开、模板）
+│   │   ├── Editor/                      # 编辑器主页面
+│   │   │   └── EditorView.vue           # 编辑器主界面
+│   │   ├── Add/                         # 添加元素页面
+│   │   │   └── AddView.vue              # 添加元素视图
+│   │   ├── Adjust/                      # 调整页面
+│   │   │   └── AdjustView.vue           # 图像调整视图
+│   │   ├── Text/                        # 文本编辑页面
+│   │   │   └── TextView.vue             # 文本编辑视图
+│   │   └── Empty/                       # 空状态页面
+│   │       └── EmptyView.vue            # 空状态提示
+│   │
+│   ├── store/                           # Pinia 状态管理
+│   │   ├── modules/                     # Store 模块
+│   │   │   ├── global.ts                # 全局状态（主题、语言）
+│   │   │   ├── editor.ts                # 编辑器状态（当前工具、选中对象）
+│   │   │   ├── canvas.ts                # 画布状态（缩放、平移）
+│   │   │   ├── history.ts               # 历史记录状态
+│   │   │   ├── layer.ts                 # 图层状态
+│   │   │   ├── selection.ts             # 选择状态
+│   │   │   ├── property.ts              # 属性面板状态
+│   │   │   └── project.ts               # 项目状态（文件信息）
+│   │   └── index.ts                     # Store 统一导出
+│   │
+│   ├── hooks/                           # Vue Composition Hooks
+│   │   ├── useEditor.ts                 # 编辑器实例 Hook
+│   │   ├── useCanvas.ts                 # 画布操作 Hook
+│   │   ├── useTool.ts                   # 工具切换 Hook
+│   │   ├── useSelection.ts              # 选择操作 Hook
+│   │   ├── useHistory.ts                # 历史记录 Hook
+│   │   ├── useKeyboard.ts               # 键盘快捷键 Hook
+│   │   ├── useClipboard.ts              # 剪贴板操作 Hook
+│   │   ├── useExport.ts                 # 导出功能 Hook
+│   │   └── useTheme.ts                  # 主题切换 Hook
+│   │
+│   ├── router/                          # 路由配置
+│   │   ├── index.ts                     # 路由主文件
+│   │   ├── routes.ts                    # 路由定义
+│   │   └── guards.ts                    # 路由守卫
+│   │
+│   ├── constants/                       # 常量定义
+│   │   ├── enum/                        # 枚举类型
+│   │   │   ├── route.ts                 # 路由枚举
+│   │   │   ├── store.ts                 # Store 枚举
+│   │   │   ├── tool.ts                  # 工具类型枚举
+│   │   │   ├── node.ts                  # 节点类型枚举
+│   │   │   ├── command.ts               # 命令类型枚举
+│   │   │   └── layer.ts                 # 图层类型枚举
+│   │   ├── config.ts                    # 配置常量（画布默认大小等）
+│   │   ├── shortcuts.ts                 # 快捷键配置
+│   │   └── themes.ts                    # 主题配置
+│   │
+│   ├── utils/                           # 通用工具函数
+│   │   ├── request.ts                   # HTTP 请求封装
+│   │   ├── storage.ts                   # 本地存储封装
+│   │   ├── validate.ts                  # 验证工具
+│   │   ├── format.ts                    # 格式化工具
+│   │   ├── file.ts                      # 文件处理工具
+│   │   └── debounce.ts                  # 防抖节流工具
+│   │
+│   ├── assets/                          # 资源文件
+│   │   ├── images/                      # 图片资源
+│   │   ├── styles/                      # 样式文件
+│   │   │   ├── common.less              # 通用样式
+│   │   │   ├── variables.less           # 样式变量
+│   │   │   ├── mixins.less              # 样式混入
+│   │   │   └── reset.less               # 样式重置
+│   │   └── fonts/                       # 字体文件
+│   │
+│   ├── types/                           # TypeScript 类型定义
+│   │   ├── global.d.ts                  # 全局类型
+│   │   ├── vue.d.ts                     # Vue 扩展类型
+│   │   └── modules.d.ts                 # 模块类型声明
+│   │
+│   ├── plugins/                         # Vue 插件
+│   │   ├── antd.ts                      # Ant Design Vue 配置
+│   │   └── icon.ts                      # 图标库配置
+│   │
+│   ├── App.vue                          # 根组件
+│   └── main.ts                          # 应用入口
+│
+├── tests/                               # 测试文件
+│   ├── unit/                            # 单元测试
+│   │   ├── editor/                      # 编辑器核心测试
+│   │   └── components/                  # 组件测试
+│   ├── e2e/                             # 端到端测试
+│   └── setup.ts                         # 测试配置
+│
+├── docs/                                # 项目文档
+│   ├── architecture.md                  # 架构设计文档
+│   ├── api.md                           # API 文档
+│   ├── development.md                   # 开发指南
+│   └── deployment.md                    # 部署文档
+│
+├── .cursor/                             # Cursor 配置
+│   └── rules/                           # Cursor Rules
+│       └── photo-editor.mdc             # 编辑器规则文档
+│
+├── .vscode/                             # VSCode 配置
+│   ├── settings.json                    # 编辑器设置
+│   ├── extensions.json                  # 推荐扩展
+│   └── launch.json                      # 调试配置
+│
+├── components.d.ts                      # 组件类型声明（自动生成）
+├── vite.config.ts                       # Vite 配置
+├── tsconfig.json                        # TypeScript 配置
+├── tsconfig.app.json                    # 应用 TS 配置
+├── tsconfig.node.json                   # Node TS 配置
+├── eslint.config.ts                     # ESLint 配置
+├── commitlint.config.mjs                # Commitlint 配置
+├── package.json                         # 项目配置
+├── pnpm-lock.yaml                       # 依赖锁定文件
+└── README.md                            # 项目说明
+```
+
+#### 核心模块职责说明
+
+##### 1. Editor 核心层 (`src/editor/`)
+
+**职责**: 完全独立于 Vue 的纯 TypeScript 编辑器内核，可被任何框架集成。
+
+- **core/**: 编辑器核心类，管理整个编辑器生命周期
+- **managers/**: 各功能管理器，遵循单一职责原则
+- **nodes/**: 画布对象节点，支持扩展自定义节点
+- **tools/**: 工具实现，遵循策略模式
+- **commands/**: 命令模式实现，支持撤销重做
+- **transforms/**: 变换控制，包围盒和控制柄
+- **layers/**: 图层系统，支持嵌套和组合
+- **filters/**: 滤镜效果，基于 Pixi.js 滤镜系统
+- **guides/**: 辅助工具，提升用户体验
+- **serialization/**: 数据持久化，支持多格式导入导出
+
+##### 2. UI 层 (`src/components/`)
+
+**职责**: Vue 组件层，负责界面展示和用户交互，通过 `editor` 实例调用核心功能。
+
+- **layout/**: 编辑器布局组件（Header、Sidebar、Content、Footer）
+- **editor/**: 编辑器专用组件（颜色选择器、右键菜单等）
+- **common/**: 通用 UI 组件
+
+##### 3. 视图层 (`src/views/`)
+
+**职责**: 页面级组件，组装布局和功能组件。
+
+##### 4. 状态层 (`src/store/`)
+
+**职责**: Pinia 状态管理，与 UI 层通信，间接反映 `editor` 状态。
+
+##### 5. Hooks 层 (`src/hooks/`)
+
+**职责**: 组合式 API，封装编辑器功能，简化组件逻辑。
+
+#### 模块依赖关系
+
+```
+┌─────────────────────────────────────────┐
+│          Views (页面视图层)              │
+│  (EditorView, AddView, AdjustView...)   │
+└───────────────┬─────────────────────────┘
+                │ 使用
+┌───────────────▼─────────────────────────┐
+│      Components (UI 组件层)              │
+│  (Canvas, Toolbar, PropertyPanel...)    │
+└───────────────┬─────────────────────────┘
+                │ 通过 Hooks 和 Store
+┌───────────────▼─────────────────────────┐
+│   Hooks (组合式 API)  ←→  Store (Pinia) │
+│  (useEditor, useTool...)                │
+└───────────────┬─────────────────────────┘
+                │ 调用 API
+┌───────────────▼─────────────────────────┐
+│       Editor Core (编辑器内核)           │
+│  (Editor, Managers, Nodes, Tools...)    │
+└─────────────────────────────────────────┘
+```
+
+#### 关键设计原则
+
+1. **核心与 UI 分离**: `editor/` 模块不依赖 Vue，可独立测试和复用
+2. **单一职责**: 每个 Manager 只负责一个功能域
+3. **依赖注入**: Editor 初始化时注入各 Manager 实例
+4. **事件驱动**: Manager 之间通过事件通信，降低耦合
+5. **命令模式**: 所有状态修改都封装为 Command，支持撤销重做
+6. **类型安全**: 充分利用 TypeScript 类型系统，减少运行时错误
+
+### 3. 关键设计模式
+
+- **命令模式 (Command Pattern)**: 所有改变画布状态的操作（增删改）必须封装为 Command，严禁直接修改属性。
+- **状态模式 (State Pattern)**: 工具系统使用状态模式，同一时间仅一个工具激活。
+- **组合模式 (Composite Pattern)**: 图层和图形对象采用树形结构管理 (Group/Node)。
+- **策略模式 (Strategy Pattern)**: 不同图形的渲染和交互逻辑通过策略接口实现。
+
+## 编码规范
+
+### Pixi.js v8 最佳实践
+
+- 初始化: 使用 `await app.init({ ... })`。
+- 绘图: 使用新版 API `graphics.rect().fill()`，废弃 `beginFill`。
+- 性能:
+  - 避免在渲染循环 (`ticker`) 中创建对象。
+  - 使用 `EventMode` 代替旧的 `interactive`。
+  - 静态图形使用缓存 (CacheAsBitmap) 策略。
+
+### Vue 3 集成规范
+
+- **ShallowRef**: 在 Vue 中持有 `Editor` 实例必须使用 `shallowRef`，防止 Pixi 内部对象被 Vue 代理导致性能雪崩。
+- **UI 响应**: UI 组件通过监听 Editor 发出的事件 (`editor.on('selection:change', cb)`) 来更新状态，而不是轮询。
+
+### TypeScript
+
+- 使用 TypeScript 严格模式
+- 所有组件使用 `<script setup lang="ts">` 语法
+- 使用枚举管理路由名称和 Store 名称
+- 注释使用中文，复杂模块最好注释详细一点
+
+### 组件规范
+
+- 组件使用 Composition API
+- 组件按功能模块组织在对应目录下
+- 使用 `unplugin-vue-components` 自动导入 Ant Design Vue 组件
+
+### 状态管理规范
+
+- 使用 Pinia 的 `setup` 语法
+- 在 `setup` 内使用 `useXxxStore()`
+- 在 `setup` 外使用 `useXxxStoreWithout()`
+- 修改 state 使用 `$patch` 或 actions，不要直接修改
+
+### 样式规范
+
+- 使用 Less 预处理器
+- 组件样式使用 `scoped`
+- 全局样式放在 `src/assets/styles/common.less`
+
+### rules与文档完善
+
+- 每次完成时都要完善当前rules
+- 每完成一个模块时，最好输出一份说明文档，说明实现方案
+- 不断完善你的设计方案，目标是最终记录该项目的完整的开发记录
+- 将你的文档记录都放在 `docs` 目录下，文档用中文命名
+
+<!-- ## 分阶段开发计划
+
+请按照以下阶段有序推进开发（当前阶段计划都不太完善，应该参考一些主流的图片编辑类产品例如美图秀秀，photoshop，稿定设计，Canva等，不断完善阶段计划，使这个项目更加成熟）：
+
+### 第一阶段：基础架构与画布 (Foundation & Viewport)
+
+1.  **环境搭建**: 初始化 Vue3 + Vite + PixiJS v8。
+2.  **Editor Core**: 实现 `Editor` 类和 `Application` 初始化。
+3.  **坐标与视口**:
+    - 实现 `ViewportManager`，支持鼠标滚轮缩放、中键平移。
+    - 坐标转换方法 (`screenToWorld`, `worldToScreen`)。
+4.  **图片的导入**
+    - 实现图片的上传逻辑，图片上传成功，渲染在画布上，图片铺满整个画布
+
+### 第二阶段：图层与图形系统 (Layers & Objects)
+
+1.  **图层管理**: 实现 `LayerManager`，支持添加/删除图层，图层与 Pixi Container 的映射。
+2.  **基础图形**: 定义 `BaseNode`，实现 `RectNode`, `ImageNode`。
+3.  **渲染循环**: 确保图形能正确渲染在指定图层上。
+
+### 第三阶段：工具与交互系统 (Tools & Interaction)
+
+1.  **事件中心**: 封装 Pixi 的指针事件 (`pointerdown`, `pointermove`, `pointerup`)。
+2.  **工具管理器**: 实现 `ToolManager`。
+3.  **基础工具**:
+    - `DrawTool`: 拖拽创建图形。
+    - `SelectTool`: 点击选中，绘制包围盒 (Bounding Box)。
+    - `HandTool`: 抓手工具（移动画布）。
+
+### 第四阶段：历史记录与变换 (History & Transform)
+
+1.  **命令系统**: 实现 `CommandManager` 和 `ICommand` 接口。
+    - `AddCommand`, `RemoveCommand`, `TransformCommand` (移动/缩放/旋转)。
+2.  **变换工具**: 在 `SelectTool` 中实现 8 点控制柄，支持图形的缩放和旋转。
+
+### 第五阶段：UI 完善与辅助功能 (UI & Polish)
+
+1.  **属性面板**: 根据当前选中对象，双向绑定属性 (颜色、位置、大小)。
+2.  **图层面板**: 可视化图层树，支持拖拽排序、锁定、隐藏。
+3.  **快捷键**: 集成 `hotkeys-js` 或自研 `KeybindingManager`。
+4.  **导出功能**: 导出为 JSON 或图片 (PNG/JPG)。 -->

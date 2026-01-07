@@ -13,6 +13,14 @@ export const useGlobalStore = defineStore(StoreEnum.GLOBAL, () => {
    * 当前选中的tab
    */
   const currentTab = ref(RouteName.ADD)
+  /**
+   * 是否为空
+   */
+  const isEmpty = ref(true)
+  /**
+   * 上传的图片 URL
+   */
+  const uploadedImageUrl = ref<string>('')
 
   // getters
   // const isEmpty = computed(() => imageList.value.length === 0)
@@ -22,11 +30,23 @@ export const useGlobalStore = defineStore(StoreEnum.GLOBAL, () => {
     currentTab.value = tab
   }
 
+  const setIsEmpty = (empty: boolean) => {
+    isEmpty.value = empty
+  }
+
+  const setUploadedImageUrl = (url: string) => {
+    uploadedImageUrl.value = url
+  }
+
   return {
     // state
     currentTab,
+    isEmpty,
+    uploadedImageUrl,
     // actions
     setCurrentTab,
+    setIsEmpty,
+    setUploadedImageUrl,
   }
 })
 
