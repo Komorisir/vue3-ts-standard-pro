@@ -1,0 +1,44 @@
+{
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Agent Harness 初始化",
+      "description": "落地 AGENTS.md、feature_list.json、progress.md、init.sh、session-handoff.md，形成可重启的 agent 工作流",
+      "dependencies": [],
+      "status": "done",
+      "evidence": "harness-creator 已写入五大子系统；validate-harness Overall 100/100；验证命令为 pnpm install / lint / build + codegraph status"
+    },
+    {
+      "id": "feat-002",
+      "name": "Codegraph 图谱构建与注入",
+      "description": "执行 codegraph init -i，将 MCP 用法写入 harness 启动路径与 Cursor 规则，供后续代理查询符号、调用关系和影响面",
+      "dependencies": ["feat-001"],
+      "status": "done",
+      "evidence": "codegraph_status: 9 files, 53 nodes, 82 edges, languages=typescript+vue; 规则 .cursor/rules/codegraph.mdc；快照 docs/codegraph-context.md"
+    },
+    {
+      "id": "feat-003",
+      "name": "接入 vue-router",
+      "description": "vue-router 已在依赖中但 main.ts 未注册。补齐路由表并在应用启动时 app.use(router)",
+      "dependencies": ["feat-001"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-004",
+      "name": "应用布局与页面骨架",
+      "description": "在路由之上补齐基础 layout 与首页，替换当前 HelloWorld 演示页作为业务入口",
+      "dependencies": ["feat-003"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-005",
+      "name": "补充 Vitest 验证覆盖",
+      "description": "当前无独立 test 脚本，类型检查依赖 pnpm run build（vue-tsc）。补充 vitest 与 store/router 关键用例",
+      "dependencies": ["feat-001"],
+      "status": "not-started",
+      "evidence": ""
+    }
+  ]
+}

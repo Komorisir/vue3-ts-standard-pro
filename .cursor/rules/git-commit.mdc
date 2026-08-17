@@ -1,0 +1,66 @@
+---
+description: 根据 git 变更自动生成符合 Conventional Commits 与 commitlint 的中文提交信息。用户要求生成 commit、写提交信息、commit 一下、总结这次修改时必须遵循。
+alwaysApply: true
+---
+
+# Git Commit 自动生成（中文）
+
+仅在用户明确要求生成或执行 commit 时生效。未要求时不要提交。
+
+必须先分析 `git status`、`git diff`、`git diff --cached`，再推断目的。用户未说明改动时不要追问，直接根据 diff 生成。
+
+## 格式
+
+```
+<type>(<scope>): <subject>
+
+<body>
+```
+
+- type / scope 用英文；subject、body 用中文；专有名词可保留英文。
+- 必须有 body（commitlint `body-min-length` ≥ 4）。
+- header 建议 ≤ 72 字符；subject 不用句号结尾。
+- 提交时用两条 `-m`，确保 body 写入，否则 hook 会失败。
+
+## Type（必须是下列之一）
+
+| Type | 场景 |
+| --- | --- |
+| feat | 新功能、新接口 |
+| fix | 异常、崩溃、兼容性修复 |
+| perf | 性能、缓存、并发、内存 |
+| refactor | 不改变行为的结构调整 |
+| docs | 文档 |
+| test | 测试 |
+| style | 样式 / 格式（非逻辑） |
+| build | 构建、依赖、打包 |
+| chore | 工程配置、工具链 |
+| improvement | 体验或实现改进（非新功能） |
+| revert | 回滚 |
+
+scope 优先取业务模块 / 目录 / 功能域，如 `src/views/user` → `feat(user)`。无明确模块可省略 scope。
+
+## Subject
+
+- 中文、动词开头：新增、支持、修复、优化、移除、更新、重构。
+- 禁止空泛描述：修改代码、更新文件、fix bug、update code。
+
+## Body
+
+说明原因、方案、影响范围。多条用换行，不要复述 subject。
+
+## 输出
+
+先给分析（Type / Scope / Reason / Changed），再给可复制的完整 message。用户要求执行提交时再 `git add` 相关文件并 commit。
+
+```
+feat(router): 新增路由守卫校验登录态
+
+未登录访问受保护页面时重定向到登录页，避免直链进入业务页。
+```
+
+```
+fix(user): 修复列表空数据时的渲染异常
+
+接口返回空数组时不再访问未定义字段，避免页面白屏。
+```
