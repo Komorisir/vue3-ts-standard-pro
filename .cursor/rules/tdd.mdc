@@ -13,4 +13,4 @@ alwaysApply: true
 
 不要为 PixiJS WebGL 帧或 GPU 资源写 unit spec。画布交互用手工验收。
 
-命令：`pnpm test:run`。约定见 `docs/tdd.md`。
+命令：`pnpm test:run`。约定见 `docs/process/tdd.md`。

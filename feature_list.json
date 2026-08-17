@@ -30,7 +30,15 @@
       "description": "写入职责单一、分层隔离、低耦合、复用、容错与注释约定，并注入 AGENTS / Cursor / OpenSpec",
       "dependencies": ["feat-019"],
       "status": "done",
-      "evidence": "docs/coding-standards.md；.cursor/rules/coding-standards.mdc；AGENTS.md 与 openspec/config.yaml 已引用"
+      "evidence": "docs/process/coding-standards.md；.cursor/rules/coding-standards.mdc；AGENTS.md 与 openspec/config.yaml 已引用"
+    },
+    {
+      "id": "feat-021",
+      "name": "文档按模块拆分与 design.md 中文约定",
+      "description": "docs/ 按 process/product/editor/tooling 分目录；OpenSpec 使用 spec-driven-zh，design.md 必须中文并含 mermaid 流程图",
+      "dependencies": ["feat-020"],
+      "status": "done",
+      "evidence": "docs/README.md；openspec/schemas/spec-driven-zh；config.yaml schema=spec-driven-zh；sdd-workflow 已增加中文 design 要求"
     },
     {
       "id": "feat-003",

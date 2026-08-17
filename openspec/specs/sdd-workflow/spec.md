@@ -25,10 +25,27 @@ The project SHALL require an active OpenSpec change before an agent implements a
 Existing product documents SHALL remain background material. The project MUST NOT bulk-convert the full editor plan into main specs in a single change.
 
 #### Scenario: Plan documents remain in docs
-- **GIVEN** `docs/pixijs-editor-plan.md` and `docs/pixijs-editor-dev-scheme.md` exist
+- **GIVEN** `docs/product/editor-plan.md` and `docs/product/editor-scheme.md` exist
+- **AND** `docs/README.md` maps process, product, editor, and tooling docs
 - **WHEN** SDD is initialized
 - **THEN** those files remain the product background
 - **AND** `openspec/specs/` only gains capabilities from archived changes
+
+### Requirement: Design docs are Chinese with flowcharts
+
+Each OpenSpec change SHALL include a `design.md` written in Chinese that explains how to implement the change. The design MUST include at least one mermaid flowchart or sequence diagram for data flow or gesture/lifecycle. Identifiers, file paths, and type names MAY remain English.
+
+#### Scenario: Propose generates a Chinese design
+- **GIVEN** an agent creates planning artifacts for a change
+- **WHEN** `design.md` is written
+- **THEN** the prose MUST be Chinese
+- **AND** the document MUST contain at least one mermaid `flowchart` or `sequenceDiagram`
+
+#### Scenario: Design is not skipped
+- **GIVEN** a change that alters editor behavior
+- **WHEN** planning artifacts are completed
+- **THEN** `design.md` MUST exist
+- **AND** MUST NOT be omitted because the change looks small
 
 ### Requirement: Archive merges completed behavior
 

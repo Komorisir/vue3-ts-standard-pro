@@ -1,6 +1,8 @@
 # PixiJS 图片画布编辑器 — 完整开发方案
 
-依据 `docs/pixijs-editor-plan.md` 展开。实现时一次只做 `feature_list.json` 中一项，完成后跑 `./init.sh`。
+依据 [`editor-plan.md`](./editor-plan.md) 展开。实现时一次只做 `feature_list.json` 中一项，完成后跑 `./init.sh`。已落地模块的设计说明写在 [`../editor/`](../editor/)，不要继续把实现细节堆进本文。
+
+> 执行进度以 `feature_list.json` 为准。下表「当前基线 / 下一刀」是方案起草时的快照，可能已过期。
 
 | 项 | 值 |
 |---|---|

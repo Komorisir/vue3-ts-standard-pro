@@ -2,7 +2,7 @@
 
 适用于本仓库全部 TypeScript / Vue 代码。产品是 PixiJS v8 图片画布编辑器：Vue 管壳与交互入口，Pinia 是文档真源，Pixi 只做单向渲染同步。
 
-配套：`docs/tdd.md`、`docs/openspec.md`、`docs/pixijs-editor-dev-scheme.md`。Cursor 摘要见 `.cursor/rules/coding-standards.mdc`。
+配套：[`tdd.md`](./tdd.md)、[`openspec.md`](./openspec.md)、[`../product/editor-scheme.md`](../product/editor-scheme.md)、[`../editor/architecture.md`](../editor/architecture.md)。Cursor 摘要见 `.cursor/rules/coding-standards.mdc`。
 
 ---
 

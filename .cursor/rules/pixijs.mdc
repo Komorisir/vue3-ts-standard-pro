@@ -13,7 +13,7 @@ alwaysApply: false
 2. 指南用 `/websites/pixijs_8_x`
 3. 仍不够再 WebFetch `https://pixijs.download/release/docs/llms.txt`
 
-完整路由见 `docs/pixijs-mcp.md`。
+完整路由见 `docs/tooling/pixijs-mcp.md`。
 
 本仓库已是 Vue 3 + Vite，接入方式：`pnpm add pixi.js`。不要运行 `create-pixi` 覆盖现有工程。
 
@@ -24,7 +24,7 @@ alwaysApply: false
 - 卸载：`app.destroy({ removeView: true, releaseGlobalResources: true }, { children: true, texture: true, textureSource: true })`
 - 资源：`Assets.load`
 - 交互：`eventMode = 'static'`，拖拽用 `globalpointermove`
-- 实现顺序与验收见 `docs/pixijs-editor-plan.md`，一次只做 `feature_list.json` 中一项
+- 实现顺序与验收见 `docs/product/editor-plan.md` 与 `docs/editor/`，一次只做 `feature_list.json` 中一项
 
 ## 禁止
 

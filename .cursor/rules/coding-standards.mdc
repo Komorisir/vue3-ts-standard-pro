@@ -5,7 +5,7 @@ alwaysApply: true
 
 # 编码规范
 
-完整条文见 `docs/coding-standards.md`。写代码时按下列约束执行。
+完整条文见 `docs/process/coding-standards.md`。写代码时按下列约束执行。
 
 ## 分层（禁止串层）
 

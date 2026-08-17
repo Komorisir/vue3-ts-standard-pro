@@ -1,7 +1,7 @@
 # Pixi.js Web 图片画布编辑器开发计划
 
-状态：计划已落地，实现未开始。  
-完整方案（数据模型、界面、任务拆分、风险、里程碑）：`docs/pixijs-editor-dev-scheme.md`。  
+状态：产品背景。执行进度以 `feature_list.json` 为准；已落地模块见 [`../editor/`](../editor/)。  
+完整方案（数据模型、界面、任务拆分、风险、里程碑）：[`editor-scheme.md`](./editor-scheme.md)。  
 约束：PixiJS **v8** 官方 skill；本仓库已是 Vue 3 + Vite + TypeScript，**不要**用 `create-pixi` 覆盖现有工程。
 
 ## 目标
@@ -40,7 +40,7 @@ hostEl.appendChild(app.canvas)
 
 交互拖拽必须用 `eventMode = 'static'` + `globalpointermove`（`pixijs-events`）。资源走 `Assets.load`（`pixijs-assets`），不要手写 `Image` + `Texture.from` 作为主路径。
 
-实现时查官方 API / 源码用 Context7（`/pixijs/pixijs/v8.16.0`），见 `docs/pixijs-mcp.md`。
+实现时查官方 API / 源码用 Context7（`/pixijs/pixijs/v8.16.0`），见 [`../tooling/pixijs-mcp.md`](../tooling/pixijs-mcp.md)。
 
 ## 架构
 

@@ -18,9 +18,11 @@ CLI 用 `npx -y @fission-ai/openspec@latest`，不要用可能过期的全局 `o
 
 ## 规范
 
-- 主 spec 只描述**当前已归档行为**。不要把 `docs/pixijs-editor-*.md` 整份灌进 `openspec/specs/`
+- 主 spec 只描述**当前已归档行为**。不要把 `docs/product/` 整份灌进 `openspec/specs/`
 - 产品文档是背景材料；delta 用 ADDED / MODIFIED / REMOVED
 - 每条 Requirement 至少一个 `#### Scenario`
+- **`design.md` 必须中文**，并至少一张 mermaid 流程图（数据流或手势/生命周期）；不得跳过
 - 规划产物写完后先 `openspec validate <change> --strict`
+- 归档后更新 `docs/editor/<模块>.md`
 
-细节见 `docs/openspec.md` 与 `openspec/config.yaml`。
+细节见 `docs/process/openspec.md` 与 `openspec/config.yaml`。默认 schema：`spec-driven-zh`。
