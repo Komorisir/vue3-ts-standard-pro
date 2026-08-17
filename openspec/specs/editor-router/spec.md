@@ -29,12 +29,11 @@ The application SHALL send unrecognized locations to the editor page.
 - **AND** that location is not the site root
 - **THEN** they land on the editor page
 
-### Requirement: Editor page is mountable without canvas chrome
+### Requirement: Editor page hosts the application shell
 
-The editor page SHALL render as a dedicated view that can later host layout and canvas. This change MUST NOT require a drawing surface or tool panels to be present.
+The editor location SHALL render the application shell. Routing MUST NOT own renderer creation or destruction.
 
-#### Scenario: First visit after routing is enabled
-- **GIVEN** a user reaches the editor page
-- **WHEN** the view finishes loading
-- **THEN** a dedicated editor view is visible
-- **AND** the page MUST NOT initialize a WebGL or WebGPU renderer
+#### Scenario: Editor route shows the shell
+- **GIVEN** the application is running
+- **WHEN** a user opens or refreshes the editor location
+- **THEN** the application shell is visible

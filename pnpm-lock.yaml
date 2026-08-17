@@ -20,6 +20,9 @@ importers:
       pinia:
         specifier: ^3.0.4
         version: 3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3))
+      pixi.js:
+        specifier: ^8.19.0
+        version: 8.19.0
       vue:
         specifier: ^3.5.24
         version: 3.5.25(typescript@5.9.3)
@@ -463,6 +466,9 @@ packages:
   '@oxc-project/types@0.96.0':
     resolution: {integrity: sha1-zHBMSaBn9NMU3u1EigaO8HZcNJg=, tarball: https://registry.npm.wps.cn/@oxc-project/types/download/@oxc-project/types-0.96.0.tgz}
 
+  '@pixi/colord@2.9.6':
+    resolution: {integrity: sha1-fk54UUgNpv08704zHwCNYL5+EgQ=, tarball: https://registry.npm.wps.cn/@pixi/colord/download/@pixi/colord-2.9.6.tgz}
+
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha1-p36nQvqyV3UUVDTrHSMoz1ATrDM=, tarball: https://registry.npm.wps.cn/@pkgjs/parseargs/download/@pkgjs/parseargs-0.11.0.tgz}
     engines: {node: '>=14'}
@@ -594,6 +600,9 @@ packages:
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha1-M0MRlx06BxIefrkbaEpgXn7qnL0=, tarball: https://registry.npm.wps.cn/@types/deep-eql/download/@types/deep-eql-4.0.2.tgz}
+
+  '@types/earcut@3.0.0':
+    resolution: {integrity: sha1-whq4NyxH+K8b7GPLNu7LaRe2xbY=, tarball: https://registry.npm.wps.cn/@types/earcut/download/@types/earcut-3.0.0.tgz}
 
   '@types/eslint@8.56.12':
     resolution: {integrity: sha1-FlfIFP/rpNL4TA1LoPRMp+ocpTo=, tarball: https://registry.npm.wps.cn/@types/eslint/download/@types/eslint-8.56.12.tgz}
@@ -780,6 +789,13 @@ packages:
         optional: true
       vue:
         optional: true
+
+  '@webgpu/types@0.1.71':
+    resolution: {integrity: sha1-Ru0zungWAp1iLQtS4eAAS/RB25g=, tarball: https://registry.npm.wps.cn/@webgpu/types/download/@webgpu/types-0.1.71.tgz}
+
+  '@xmldom/xmldom@0.8.14':
+    resolution: {integrity: sha1-lsPLswyzBfj4HR1ZZb8D6atdavY=, tarball: https://registry.npm.wps.cn/@xmldom/xmldom/download/@xmldom/xmldom-0.8.14.tgz}
+    engines: {node: '>=10.0.0'}
 
   JSONStream@1.3.5:
     resolution: {integrity: sha1-MgjB8I06TZkmGrZPkjArwV4RHKA=, tarball: https://registry.npm.wps.cn/JSONStream/download/JSONStream-1.3.5.tgz}
@@ -1136,6 +1152,9 @@ packages:
     resolution: {integrity: sha1-dz8OaVJ6gxXHKF1e5zxEWdIKgCA=, tarball: https://registry.npm.wps.cn/dotenv/download/dotenv-16.6.1.tgz}
     engines: {node: '>=12'}
 
+  earcut@3.2.3:
+    resolution: {integrity: sha1-dK7BlVWn4odzQpgmcp0uS/6xkCI=, tarball: https://registry.npm.wps.cn/earcut/download/earcut-3.2.3.tgz}
+
   eastasianwidth@0.2.0:
     resolution: {integrity: sha1-aWzi7Aqg5uqTo5f/zySqeEDIJ8s=, tarball: https://registry.npm.wps.cn/eastasianwidth/download/eastasianwidth-0.2.0.tgz}
 
@@ -1375,6 +1394,9 @@ packages:
     resolution: {integrity: sha1-m8TKoTFwK0thcpy35Cc1vFUMnuY=, tarball: https://registry.npm.wps.cn/get-east-asian-width/download/get-east-asian-width-1.4.0.tgz}
     engines: {node: '>=18'}
 
+  gifuct-js@2.1.2:
+    resolution: {integrity: sha1-BhUkN7ow7JFNuDmL2Di9D7yKbs0=, tarball: https://registry.npm.wps.cn/gifuct-js/download/gifuct-js-2.1.2.tgz}
+
   git-raw-commits@4.0.0:
     resolution: {integrity: sha1-shL9K/+XJtJ8EoOhFX6ClJBZMoU=, tarball: https://registry.npm.wps.cn/git-raw-commits/download/git-raw-commits-4.0.0.tgz}
     engines: {node: '>=16'}
@@ -1552,6 +1574,9 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=, tarball: https://registry.npm.wps.cn/isexe/download/isexe-2.0.0.tgz}
 
+  ismobilejs@1.1.1:
+    resolution: {integrity: sha1-xWygro5Sskyg8iul7zIVot27qg4=, tarball: https://registry.npm.wps.cn/ismobilejs/download/ismobilejs-1.1.1.tgz}
+
   jackspeak@3.4.3:
     resolution: {integrity: sha1-iDOp2Jq0rN5hiJQr0cU7Y5DtWoo=, tarball: https://registry.npm.wps.cn/jackspeak/download/jackspeak-3.4.3.tgz}
 
@@ -1568,6 +1593,9 @@ packages:
     resolution: {integrity: sha1-9Xn5d+1Mkwzvc6+PmPPwpgis1R4=, tarball: https://registry.npm.wps.cn/js-beautify/download/js-beautify-1.15.4.tgz}
     engines: {node: '>=14'}
     hasBin: true
+
+  js-binary-schema-parser@2.0.3:
+    resolution: {integrity: sha1-PXhIdI6FhuY7NOiRG2Q/Wc+2OW4=, tarball: https://registry.npm.wps.cn/js-binary-schema-parser/download/js-binary-schema-parser-2.0.3.tgz}
 
   js-cookie@3.0.8:
     resolution: {integrity: sha1-RE5vSyel2ERZT+9hyda8pfB4dog=, tarball: https://registry.npm.wps.cn/js-cookie/download/js-cookie-3.0.8.tgz}
@@ -1955,6 +1983,9 @@ packages:
     resolution: {integrity: sha1-4rXb7eAOf6m8NjYH9TMn6LBzGJs=, tarball: https://registry.npm.wps.cn/parse-node-version/download/parse-node-version-1.0.1.tgz}
     engines: {node: '>= 0.10'}
 
+  parse-svg-path@0.2.0:
+    resolution: {integrity: sha1-OLyHR+eqMjJ64lecMxsWHEhnoWc=, tarball: https://registry.npm.wps.cn/parse-svg-path/download/parse-svg-path-0.2.0.tgz}
+
   parse5@8.0.1:
     resolution: {integrity: sha1-9DvNLNaD7+CEB1Mz6c4Np9Btox4=, tarball: https://registry.npm.wps.cn/parse5/download/parse5-8.0.1.tgz}
 
@@ -2021,6 +2052,9 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  pixi.js@8.19.0:
+    resolution: {integrity: sha1-Sg6QVviO5hKT8JJyPIy8Lgg8in8=, tarball: https://registry.npm.wps.cn/pixi.js/download/pixi.js-8.19.0.tgz}
 
   pkg-types@1.3.1:
     resolution: {integrity: sha1-vXzHCIEZJ3fu9TJsGd60bokJF98=, tarball: https://registry.npm.wps.cn/pkg-types/download/pkg-types-1.3.1.tgz}
@@ -2253,7 +2287,7 @@ packages:
     resolution: {integrity: sha1-BP58f54e0tZiIzwoyys1ufY/bk8=, tarball: https://registry.npm.wps.cn/source-map-support/download/source-map-support-0.5.21.tgz}
 
   source-map@0.6.1:
-    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: https://registry.npm.wps.cn/source-map/download/source-map-0.6.1.tgz}
+    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: http://registry.npm.wps.cn/source-map/download/source-map-0.6.1.tgz}
     engines: {node: '>=0.10.0'}
 
   speakingurl@14.0.1:
@@ -2410,6 +2444,10 @@ packages:
 
   through@2.3.8:
     resolution: {integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=, tarball: https://registry.npm.wps.cn/through/download/through-2.3.8.tgz}
+
+  tiny-lru@11.4.7:
+    resolution: {integrity: sha1-fd+r4icgyY9+SLKAbZ2acak+4NY=, tarball: https://registry.npm.wps.cn/tiny-lru/download/tiny-lru-11.4.7.tgz}
+    engines: {node: '>=12'}
 
   tinybench@2.9.0:
     resolution: {integrity: sha1-EDyfi6bXI3pHq23R3P93JRhjQms=, tarball: https://registry.npm.wps.cn/tinybench/download/tinybench-2.9.0.tgz}
@@ -3095,6 +3133,8 @@ snapshots:
 
   '@oxc-project/types@0.96.0': {}
 
+  '@pixi/colord@2.9.6': {}
+
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
@@ -3183,6 +3223,8 @@ snapshots:
       '@types/node': 24.10.1
 
   '@types/deep-eql@4.0.2': {}
+
+  '@types/earcut@3.0.0': {}
 
   '@types/eslint@8.56.12':
     dependencies:
@@ -3448,6 +3490,10 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
       vue: 3.5.25(typescript@5.9.3)
+
+  '@webgpu/types@0.1.71': {}
+
+  '@xmldom/xmldom@0.8.14': {}
 
   JSONStream@1.3.5:
     dependencies:
@@ -3799,6 +3845,8 @@ snapshots:
 
   dotenv@16.6.1: {}
 
+  earcut@3.2.3: {}
+
   eastasianwidth@0.2.0: {}
 
   editorconfig@1.0.7:
@@ -4036,6 +4084,10 @@ snapshots:
 
   get-east-asian-width@1.4.0: {}
 
+  gifuct-js@2.1.2:
+    dependencies:
+      js-binary-schema-parser: 2.0.3
+
   git-raw-commits@4.0.0:
     dependencies:
       dargs: 8.1.0
@@ -4190,6 +4242,8 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  ismobilejs@1.1.1: {}
+
   jackspeak@3.4.3:
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -4211,6 +4265,8 @@ snapshots:
       glob: 10.5.0
       js-cookie: 3.0.8
       nopt: 7.2.1
+
+  js-binary-schema-parser@2.0.3: {}
 
   js-cookie@3.0.8: {}
 
@@ -4575,6 +4631,8 @@ snapshots:
 
   parse-node-version@1.0.1: {}
 
+  parse-svg-path@0.2.0: {}
+
   parse5@8.0.1:
     dependencies:
       entities: 8.0.0
@@ -4622,6 +4680,19 @@ snapshots:
       vue: 3.5.25(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
+
+  pixi.js@8.19.0:
+    dependencies:
+      '@pixi/colord': 2.9.6
+      '@types/earcut': 3.0.0
+      '@webgpu/types': 0.1.71
+      '@xmldom/xmldom': 0.8.14
+      earcut: 3.2.3
+      eventemitter3: 5.0.1
+      gifuct-js: 2.1.2
+      ismobilejs: 1.1.1
+      parse-svg-path: 0.2.0
+      tiny-lru: 11.4.7
 
   pkg-types@1.3.1:
     dependencies:
@@ -5002,6 +5073,8 @@ snapshots:
   throttle-debounce@5.0.2: {}
 
   through@2.3.8: {}
+
+  tiny-lru@11.4.7: {}
 
   tinybench@2.9.0: {}
 

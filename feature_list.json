@@ -45,32 +45,32 @@
       "name": "编辑器应用壳",
       "description": "EditorLayout：顶栏、左侧工具、中央画布 host、右侧属性面板，替换 HelloWorld",
       "dependencies": ["feat-003"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "2026-08-17-add-editor-shell 已归档；主 spec editor-shell + editor-router 已同步；pnpm test:run 11 passed；lint/build/openspec validate --strict 通过。手工：四区可见、host 有面积、窗口缩放 host 仍在中央"
     },
     {
       "id": "feat-005",
       "name": "安装 PixiJS 并封装 Application",
       "description": "pnpm add pixi.js；usePixiApp 负责 new Application + await init、挂载 app.canvas、卸载 destroy",
       "dependencies": ["feat-004"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "add-pixi-app 已实现：pixi.js 8.19.0；createPixiAppInitOptions TDD 3 passed；usePixiApp 挂载 app.canvas 并官方 destroy；pnpm test:run 5 files / 14 tests；lint/build/init.sh/openspec validate --strict 通过。手工：/editor 一块 canvas、深色空舞台、空态文案仍可见、缩放跟 host、离开再进仍一块 canvas"
     },
     {
       "id": "feat-006",
       "name": "场景分层与图片导入",
       "description": "建立 viewport/world/content 分层；本地文件经 Assets.load 显示为 Sprite",
       "dependencies": ["feat-005"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "2026-08-17-add-scene-import 已归档；主 spec scene-import 新建，editor-shell / pixi-application 已同步。主图仅一张、再次导入替换；Open/拖入/空态点击导入 JPEG/PNG/WebP。pnpm test:run 8 files / 21 tests；lint/build/init.sh/openspec validate --strict 通过。手工待确认：居中、替换主图、坏文件错误、hint 隐藏、进出页一块 canvas"
     },
     {
       "id": "feat-007",
       "name": "视口平移与缩放",
       "description": "拖动画布平移、滚轮缩放、适配窗口；resizeTo 指向 host",
       "dependencies": ["feat-006"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "已归档 openspec/changes/archive/2026-08-17-add-viewport-pan-zoom。视口数学 TDD；Pinia viewport 与图层 transform 分离；平移/空格/中键；滚轮指针锚点缩放；导入与 host 尺寸变化后 fitView；ResizeObserver 后 app.resize()。pnpm test:run 9 files / 28 tests。主 spec 已同步 viewport-navigation / scene-import / editor-shell / pixi-application。手工验收仍待浏览器确认。"
     },
     {
       "id": "feat-008",

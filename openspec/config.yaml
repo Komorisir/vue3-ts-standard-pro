@@ -33,17 +33,17 @@ rules:
     - Honor PixiJS v8 constraints from context
     - State TDD vs manual verification for each risky area
     - Do not introduce a second source of truth besides Pinia
-    - "Name which layer owns the change and which public contract neighbors use"
+    - 'Name which layer owns the change and which public contract neighbors use'
   tasks:
-    - "Order work as failing tests first for logic, then implementation, then harness or docs"
+    - 'Order work as failing tests first for logic, then implementation, then harness or docs'
     - Each task must be independently verifiable
-    - "Last tasks must run ./init.sh and update feature_list.json plus progress.md"
+    - 'Last tasks must run ./init.sh and update feature_list.json plus progress.md'
 
 operations:
   apply:
     guidance:
-      - "Follow TDD for pure logic. Write a failing spec, then implement"
-      - "Run pnpm test:run on the touched area before the full ./init.sh"
+      - 'Follow TDD for pure logic. Write a failing spec, then implement'
+      - 'Run pnpm test:run on the touched area before the full ./init.sh'
       - Do not implement a second feature_list item in the same apply
   archive:
     guidance:

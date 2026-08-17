@@ -3,4 +3,5 @@
  */
 export enum StoreEnum {
   GLOBAL = 'global',
+  EDITOR = 'editor',
 }
