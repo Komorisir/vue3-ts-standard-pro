@@ -6,37 +6,141 @@
       "description": "落地 AGENTS.md、feature_list.json、progress.md、init.sh、session-handoff.md，形成可重启的 agent 工作流",
       "dependencies": [],
       "status": "done",
-      "evidence": "harness-creator 已写入五大子系统；validate-harness Overall 100/100；验证命令为 pnpm install / lint / build + codegraph status"
+      "evidence": "harness-creator 已写入五大子系统；validate-harness Overall 100/100"
     },
     {
       "id": "feat-002",
       "name": "Codegraph 图谱构建与注入",
-      "description": "执行 codegraph init -i，将 MCP 用法写入 harness 启动路径与 Cursor 规则，供后续代理查询符号、调用关系和影响面",
+      "description": "执行 codegraph init -i，将 MCP 用法写入 harness 启动路径与 Cursor 规则",
       "dependencies": ["feat-001"],
       "status": "done",
-      "evidence": "codegraph_status: 9 files, 53 nodes, 82 edges, languages=typescript+vue; 规则 .cursor/rules/codegraph.mdc；快照 docs/codegraph-context.md"
+      "evidence": "9 files / 53 nodes / 82 edges；.cursor/rules/codegraph.mdc"
     },
     {
       "id": "feat-003",
-      "name": "接入 vue-router",
-      "description": "vue-router 已在依赖中但 main.ts 未注册。补齐路由表并在应用启动时 app.use(router)",
+      "name": "接入 vue-router 与编辑器路由",
+      "description": "注册 vue-router，默认进入 /editor，为画布页提供稳定路由入口",
       "dependencies": ["feat-001"],
       "status": "not-started",
       "evidence": ""
     },
     {
       "id": "feat-004",
-      "name": "应用布局与页面骨架",
-      "description": "在路由之上补齐基础 layout 与首页，替换当前 HelloWorld 演示页作为业务入口",
+      "name": "编辑器应用壳",
+      "description": "EditorLayout：顶栏、左侧工具、中央画布 host、右侧属性面板，替换 HelloWorld",
       "dependencies": ["feat-003"],
       "status": "not-started",
       "evidence": ""
     },
     {
       "id": "feat-005",
+      "name": "安装 PixiJS 并封装 Application",
+      "description": "pnpm add pixi.js；usePixiApp 负责 new Application + await init、挂载 app.canvas、卸载 destroy",
+      "dependencies": ["feat-004"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-006",
+      "name": "场景分层与图片导入",
+      "description": "建立 viewport/world/content 分层；本地文件经 Assets.load 显示为 Sprite",
+      "dependencies": ["feat-005"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-007",
+      "name": "视口平移与缩放",
+      "description": "拖动画布平移、滚轮缩放、适配窗口；resizeTo 指向 host",
+      "dependencies": ["feat-006"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-008",
+      "name": "选择与变换",
+      "description": "选中对象后移动/缩放/旋转；eventMode static + globalpointermove；手柄用 Graphics",
+      "dependencies": ["feat-007"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-009",
+      "name": "图层模型与图层面板",
+      "description": "Pinia 为图层真源，同步显隐/排序/锁定到场景图",
+      "dependencies": ["feat-008"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-010",
+      "name": "裁剪与蒙版",
+      "description": "矩形裁剪与遮罩，结果可继续变换",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-011",
+      "name": "滤镜调色",
+      "description": "亮度、对比度、饱和度、色相；滑条实时预览，可重置",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-012",
+      "name": "文字图层",
+      "description": "添加可变换的 Text 图层，支持字号与颜色",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-013",
+      "name": "矢量标注",
+      "description": "矩形、椭圆、箭头、画笔，标注可再选中编辑",
+      "dependencies": ["feat-008"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-014",
+      "name": "撤销重做",
+      "description": "命令栈覆盖变换、图层、滤镜；Ctrl+Z / Ctrl+Y",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-015",
+      "name": "导出图片",
+      "description": "导出 PNG/JPEG，不含 overlay 选框，分辨率正确",
+      "dependencies": ["feat-006"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-016",
+      "name": "性能与资源释放",
+      "description": "销毁纹理、大图 culling、离开页释放 GPU，反复进出无泄漏",
+      "dependencies": ["feat-005"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-017",
       "name": "补充 Vitest 验证覆盖",
-      "description": "当前无独立 test 脚本，类型检查依赖 pnpm run build（vue-tsc）。补充 vitest 与 store/router 关键用例",
-      "dependencies": ["feat-001"],
+      "description": "为文档模型、命令栈、导出纯函数补充 vitest，并接入验证脚本",
+      "dependencies": ["feat-014"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-018",
+      "name": "键盘与无障碍",
+      "description": "方向键微调、Tab 可达、画布 accessibleTitle",
+      "dependencies": ["feat-008"],
       "status": "not-started",
       "evidence": ""
     }

@@ -1,0 +1,34 @@
+---
+description: PixiJS v8 官方 skill 路由。涉及画布、WebGL/WebGPU、Sprite、Application、图片编辑器渲染时必须遵循。
+alwaysApply: false
+---
+
+# PixiJS v8
+
+先读本机全局 skill `pixijs`（`~/.agents/skills/pixijs/SKILL.md`），再按任务加载子 skill。官方 skill 只装在用户目录，不要写入仓库 `.agents/`。
+
+当前 API / 源码细节用 Context7（本机已启用），不要先靠训练记忆：
+
+1. `query-docs`，`libraryId` 用 `/pixijs/pixijs/v8.16.0`（官方 GitHub 源）
+2. 指南用 `/websites/pixijs_8_x`
+3. 仍不够再 WebFetch `https://pixijs.download/release/docs/llms.txt`
+
+完整路由见 `docs/pixijs-mcp.md`。
+
+本仓库已是 Vue 3 + Vite，接入方式：`pnpm add pixi.js`。不要运行 `create-pixi` 覆盖现有工程。
+
+## 必须
+
+- `const app = new Application(); await app.init(options)`
+- 把 `app.canvas` 挂到 Vue host；`resizeTo` 指向 host 元素
+- 卸载：`app.destroy({ removeView: true, releaseGlobalResources: true }, { children: true, texture: true, textureSource: true })`
+- 资源：`Assets.load`
+- 交互：`eventMode = 'static'`，拖拽用 `globalpointermove`
+- 实现顺序与验收见 `docs/pixijs-editor-plan.md`，一次只做 `feature_list.json` 中一项
+
+## 禁止
+
+- `new Application({ ... })`
+- `app.view`
+- `init()` 完成前访问 `canvas` / `renderer` / `screen`
+- v7 API：`beginFill` / `endFill` / `BaseTexture` / `@pixi/*` 分包
