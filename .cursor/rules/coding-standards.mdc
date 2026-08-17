@@ -1,0 +1,35 @@
+---
+description: 项目编码规范。编写或修改 TypeScript / Vue / 编辑器代码时必须遵循。
+alwaysApply: true
+---
+
+# 编码规范
+
+完整条文见 `docs/coding-standards.md`。写代码时按下列约束执行。
+
+## 分层（禁止串层）
+
+```
+UI / tools → Command → Pinia 文档 → scene/sync → Pixi
+```
+
+- UI、store、命令、工具手势、场景同步、`Application` 生命周期、`src/shared` 各管一类能力
+- UI 与 store **禁止** `import 'pixi.js'` 或持有 DisplayObject
+- tools 只产生 Command，不直接改场景或 store 私有字段
+- 单文件有效逻辑约 200 行即拆，禁止大聚合组件 / 上帝类
+
+## 耦合
+
+只通过公开类型、函数入参出参、Pinia action、Vue `emit`、Pixi 事件通信。禁止跨模块读未导出或 `_` 私有成员。
+
+## 复用
+
+Pixi 加载/变换/拖拽骨架与数值工具抽到 `shared/` 或 `editor/model/`，业务只组装。
+
+## 容错
+
+File、坐标、资源加载、手势必须边界校验；`Assets.load` 与 `destroy`/`revoke` 走 try/finally。ticker 与指针回调不得把未捕获异常抛到页面。禁止空 `catch`。
+
+## 注释
+
+中文。每个文件写文件头（职责 / 非职责）。公开导出写 JSDoc（`@param` `@returns` `@throws`）。写不变量，不复述下一行代码。

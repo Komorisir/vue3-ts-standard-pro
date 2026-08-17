@@ -1,0 +1,16 @@
+---
+description: TDD 与 Vitest。新增或修改纯逻辑时必须遵循。
+alwaysApply: true
+---
+
+# TDD
+
+纯逻辑（模型、命令、数值、导出 helper、可测的 store 变换）必须先红后绿：
+
+1. 先写同目录 `*.spec.ts`，`pnpm test:run` 必须失败
+2. 再写最少实现让它通过
+3. 没有失败用例不得声称逻辑完成
+
+不要为 PixiJS WebGL 帧或 GPU 资源写 unit spec。画布交互用手工验收。
+
+命令：`pnpm test:run`。约定见 `docs/tdd.md`。

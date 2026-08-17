@@ -1,0 +1,26 @@
+---
+description: OpenSpec SDD 工作流。规划、实现或归档功能变更时必须遵循。
+alwaysApply: true
+---
+
+# OpenSpec
+
+改产品行为前先有 OpenSpec change。一次 change 只对应 `feature_list.json` 里的一项。
+
+## 顺序
+
+1. `/opsx-explore`（可选）
+2. `/opsx-propose` — 只写 `openspec/changes/<name>/` 产物，不写业务代码
+3. 人审后再 `/opsx-apply`
+4. `./init.sh` 通过后 `/opsx-archive`
+
+CLI 用 `npx -y @fission-ai/openspec@latest`，不要用可能过期的全局 `openspec`。
+
+## 规范
+
+- 主 spec 只描述**当前已归档行为**。不要把 `docs/pixijs-editor-*.md` 整份灌进 `openspec/specs/`
+- 产品文档是背景材料；delta 用 ADDED / MODIFIED / REMOVED
+- 每条 Requirement 至少一个 `#### Scenario`
+- 规划产物写完后先 `openspec validate <change> --strict`
+
+细节见 `docs/openspec.md` 与 `openspec/config.yaml`。

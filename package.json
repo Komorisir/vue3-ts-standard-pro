@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "prepare": "husky",
     "lint": "eslint --fix",
-    "format": "prettier -w . "
+    "format": "prettier -w . ",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "dependencies": {
     "@icon-park/vue-next": "^1.4.2",
@@ -24,6 +26,7 @@
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.0",
     "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
@@ -32,6 +35,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "jiti": "^2.6.1",
+    "jsdom": "^30.0.1",
     "less": "^4.4.2",
     "less-loader": "^12.3.0",
     "lint-staged": "^16.2.6",
@@ -48,6 +52,7 @@
     "vite-plugin-eslint2": "^5.0.4",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-stylelint": "^6.0.2",
+    "vitest": "^4.1.10",
     "vue-tsc": "^3.1.1"
   },
   "pnpm": {

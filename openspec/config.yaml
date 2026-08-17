@@ -1,0 +1,52 @@
+schema: spec-driven
+
+context: |
+  Product: browser image canvas editor (PixiJS v8).
+  Shell: Vue 3 + TypeScript + Vite (rolldown-vite) + Pinia + Ant Design Vue + vue-router.
+  Render: PixiJS v8 only. Add with `pnpm add pixi.js`. Never run `create-pixi` over this repo.
+  PixiJS hard rules: `new Application()` then `await app.init(options)`; mount `app.canvas`; destroy with official options; load via `Assets.load`; drag with `eventMode = 'static'` + `globalpointermove`.
+  Architecture: Pinia document is the only business source of truth; Pixi scene syncs one-way from the document.
+  Existing product docs (source material, not OpenSpec specs):
+    - docs/pixijs-editor-plan.md
+    - docs/pixijs-editor-dev-scheme.md
+  Execution tracker: feature_list.json (one unfinished feature at a time).
+  Agent harness: AGENTS.md, progress.md, init.sh, session-handoff.md.
+  Codegraph first for symbol/call/impact questions.
+  Package manager: pnpm.
+  Commits: Chinese Conventional Commits via .cursor/rules/git-commit.mdc; only when the user asks.
+  Tests: Vitest + jsdom. Colocate `*.spec.ts`. TDD for pure logic (model, commands, math, export helpers). Do not unit-test Pixi WebGL frames.
+  Coding standards: docs/coding-standards.md. Single responsibility and strict layers (UI, Pinia, commands, tools, scene sync, Application lifecycle, shared). Talk only via public types, function IO, store actions, Vue emit, Pixi events. Extract reusable Pixi/math/drag helpers. Validate inputs and wrap load/destroy in try/finally. Chinese file headers and JSDoc on public exports.
+  OpenSpec: one change = one feature_list item. Do not bulk-convert the whole plan into main specs.
+
+rules:
+  proposal:
+    - Keep one intent that can be stated in a single sentence
+    - Include Non-goals
+    - Map the change to a feature_list.json id when one exists
+    - Point to the relevant section of docs/pixijs-editor-dev-scheme.md instead of restating the whole plan
+  specs:
+    - Use RFC 2119 MUST/SHALL/SHOULD/MAY
+    - Every requirement needs at least one GIVEN/WHEN/THEN scenario
+    - Describe observable behavior, not file paths or class names
+    - Use ADDED/MODIFIED/REMOVED correctly against current openspec/specs
+  design:
+    - Honor PixiJS v8 constraints from context
+    - State TDD vs manual verification for each risky area
+    - Do not introduce a second source of truth besides Pinia
+    - "Name which layer owns the change and which public contract neighbors use"
+  tasks:
+    - "Order work as failing tests first for logic, then implementation, then harness or docs"
+    - Each task must be independently verifiable
+    - "Last tasks must run ./init.sh and update feature_list.json plus progress.md"
+
+operations:
+  apply:
+    guidance:
+      - "Follow TDD for pure logic. Write a failing spec, then implement"
+      - "Run pnpm test:run on the touched area before the full ./init.sh"
+      - Do not implement a second feature_list item in the same apply
+  archive:
+    guidance:
+      - Confirm ./init.sh passed and evidence is in feature_list.json or progress.md
+      - Keep the completion summary concise
+      - Leave the next feature as a new change, not leftover tasks in this one

@@ -17,12 +17,28 @@
       "evidence": "9 files / 53 nodes / 82 edges；.cursor/rules/codegraph.mdc"
     },
     {
+      "id": "feat-019",
+      "name": "SDD + TDD + Harness 规范搭建",
+      "description": "接入 OpenSpec、Vitest 与 TDD 约定，并注入 AGENTS/init 工作流；不实现编辑器功能",
+      "dependencies": ["feat-001", "feat-002"],
+      "status": "done",
+      "evidence": "OpenSpec init + change 2026-08-17-setup-sdd-tdd-harness 已归档；pnpm test:run 5 passed；lint/build/openspec validate --all 通过"
+    },
+    {
+      "id": "feat-020",
+      "name": "编码规范落地",
+      "description": "写入职责单一、分层隔离、低耦合、复用、容错与注释约定，并注入 AGENTS / Cursor / OpenSpec",
+      "dependencies": ["feat-019"],
+      "status": "done",
+      "evidence": "docs/coding-standards.md；.cursor/rules/coding-standards.mdc；AGENTS.md 与 openspec/config.yaml 已引用"
+    },
+    {
       "id": "feat-003",
       "name": "接入 vue-router 与编辑器路由",
       "description": "注册 vue-router，默认进入 /editor，为画布页提供稳定路由入口",
       "dependencies": ["feat-001"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "add-editor-router 已实现：`/` 与 catch-all 重定向 /editor；pnpm test:run 8 passed；lint/build/openspec validate --strict 通过。手工：pnpm dev 后刷新 / 与 /editor 应见「编辑器」占位"
     },
     {
       "id": "feat-004",
@@ -130,9 +146,9 @@
     },
     {
       "id": "feat-017",
-      "name": "补充 Vitest 验证覆盖",
-      "description": "为文档模型、命令栈、导出纯函数补充 vitest，并接入验证脚本",
-      "dependencies": ["feat-014"],
+      "name": "补充编辑器纯逻辑测试",
+      "description": "为文档模型、命令栈、导出纯函数补充 vitest（运行器已在 feat-019 接入）",
+      "dependencies": ["feat-014", "feat-019"],
       "status": "not-started",
       "evidence": ""
     },

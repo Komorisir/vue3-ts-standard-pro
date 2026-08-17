@@ -2,51 +2,48 @@
 
 ## Current Objective
 
-- Goal: 校验并安装 PixiJS 官方 skill，输出可落地的图片画布编辑器开发计划
-- Current status: skill 已安装，计划已写入；实现从 feat-003 开始
+- Goal: feat-003 接入 vue-router，默认进入 `/editor`
+- Current status: 已实现并归档；请本地确认刷新行为
 - Branch / commit: 工作区未提交
 
 ## Completed This Session
 
-- [x] 确认本地原先无 PixiJS skill
-- [x] 项目级安装 `pixijs/pixijs-skills`（26 个）
-- [x] 编写 `docs/pixijs-editor-plan.md` 与 feature 拆分
-- [x] 注入 AGENTS.md / pixijs 规则
+- [x] `/opsx-propose add-editor-router` 规划产物
+- [x] `/opsx-apply`：路由表 TDD → 接线 → 删除 HelloWorld
 
 ## Verification Evidence
 
 | Check | Command | Result | Notes |
 |---|---|---|---|
-| Skill 安装 | 本机全局 `pixijs*` | pass | `~/.agents/skills/`，仓库已移除项目级副本 |
-| 计划文档 | `docs/pixijs-editor-plan.md` | pass | P0–P6 |
-| Harness | feature_list / progress / handoff | pass | feat-003 为下一项 |
-| `./init.sh` | lint + build | pending | 实现阶段再跑 |
+| Tests | `pnpm test:run` | pass | 8 tests（clamp 5 + routes 3） |
+| Lint | `pnpm run lint` | pass | |
+| Build | `pnpm run build` | pass | 含 EditorPage 异步 chunk |
+| OpenSpec | `validate add-editor-router --strict` | pass | |
+| 手工刷新 | `pnpm dev` 打开 `/` 与 `/editor` | pending | 应见「编辑器」占位 |
 
 ## Files Changed
 
-- 已删除仓库 `.agents/` 与 `skills-lock.json`（PixiJS skill 改用本机全局）
-- `docs/pixijs-editor-plan.md`
-- `feature_list.json`、`AGENTS.md`、`.cursor/rules/pixijs.mdc`
-- `progress.md`、`session-handoff.md`
+- `src/router/*`、`src/views/editor/EditorPage.vue`
+- `src/main.ts`、`src/App.vue`；删除 HelloWorld
+- `openspec/changes/add-editor-router/`
+- `feature_list.json`、`progress.md`、`session-handoff.md`
 
 ## Decisions Made
 
-- 现有 Vue 工程用 `pnpm add pixi.js`，不跑 create-pixi
-- Pinia 文档模型 + Pixi 场景同步
-- 先路由和布局，再 Application
+- history 模式；未知路径重定向 `/editor`
+- 不在本项做布局或 Pixi
 
 ## Blockers / Risks
 
-- `pixi.js` 依赖按计划在 feat-005 再装
+- 浏览器手工验收尚未在本环境执行
 
 ## Next Session Startup
 
-1. Read `AGENTS.md`.
-2. Read `docs/pixijs-editor-plan.md` and `feature_list.json`.
-3. Review this handoff.
-4. Run `./init.sh` before editing.
-5. 只做 **feat-003**。
+1. Read `AGENTS.md` and this handoff.
+2. `pnpm dev`，确认 `/` 与 `/editor` 都是编辑器占位页。
+3. `/opsx-propose` feat-004。
 
 ## Recommended Next Step
 
-- 领取 **feat-003**：创建 `src/router`，在 `main.ts` 注册，默认进入 `/editor`。
+- 实现前先读 `docs/coding-standards.md`
+- `/opsx-propose` feat-004 编辑器应用壳

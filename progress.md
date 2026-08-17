@@ -2,57 +2,61 @@
 
 ## Current State
 
-**Last Updated:** 2026-08-17 09:50
-**Session ID:** pixijs-plan
-**Active Feature:** 无进行中实现。下一会话领取 feat-003
+**Last Updated:** 2026-08-17 11:05
+**Session ID:** coding-standards
+**Active Feature:** feat-003 已归档。编码规范已写入。下一项 feat-004
 
 ## Status
 
 ### What's Done
 
-- [x] Agent Harness + Codegraph
-- [x] 使用本机全局 `pixijs/pixijs-skills`（26 个 skill，`~/.agents/skills/`，不入库）
-- [x] 输出编辑器计划：`docs/pixijs-editor-plan.md`
-- [x] 完整开发方案：`docs/pixijs-editor-dev-scheme.md`
-- [x] `feature_list.json` 对齐 P0–P6
-- [x] AGENTS.md / `.cursor/rules/pixijs.mdc` 注入 v8 合规约束
+- [x] Agent Harness + Codegraph + SDD/TDD（feat-019）
+- [x] **feat-020**：`docs/coding-standards.md` + Cursor 规则 + Harness 引用
+- [x] **feat-003 / add-editor-router**
+  - 导出路由表：`/` 与 `/:pathMatch(.*)*` → `/editor`，`/editor` 名为 `editor`
+  - `main.ts` 在 mount 前 `app.use(router)`（history 模式）
+  - `App.vue` 只渲染 `RouterView`
+  - 占位页 `EditorPage`，无 Pixi / 四区布局
+  - 已删除 `HelloWorld.vue`
 
 ### What's In Progress
 
-- [ ] 无代码实现。等待领取 feat-003（vue-router + `/editor`）
+- [ ] 浏览器手工确认：`pnpm dev` 后刷新 `/` 与 `/editor`
 
 ### What's Next
 
-1. feat-003 接入 vue-router
-2. feat-004 编辑器应用壳
-3. feat-005 `pnpm add pixi.js` + `usePixiApp`
+1. `/opsx-propose` feat-004 编辑器应用壳
+2. feat-005 `pnpm add pixi.js` + `usePixiApp`
 
 ## Blockers / Risks
 
-- [ ] 尚未安装 `pixi.js` npm 包（按计划在 feat-005 安装，避免无 host 时先初始化 Application）
-- [ ] Windows 下 `./init.sh` 需 Git Bash
+- [ ] 尚未安装 `pixi.js`（feat-005）
+- [ ] Windows 下 `./init.sh` 需 Git Bash；本会话用等价命令跑通
+- [ ] 静态托管需把未知路径回退到 `index.html`（Vite 开发服务器已具备）
 
 ## Decisions Made
 
-- **现有工程接入**：`pnpm add pixi.js`，不用 `create-pixi` 覆盖仓库
-- **只做 PixiJS v8**：`Application.init` 异步、`app.canvas`、官方 destroy 选项
-- **Pinia 为文档真源**，Pixi 场景只做渲染同步
-- **先壳后引擎**：003 → 004 → 005，再导入图片
+- 沿用 proposal/design：history 模式、未知路径回编辑器、不保留 HelloWorld
+- 占位页必须先落地，否则 Vitest/Vite 无法解析路由表里的动态 import
 
 ## Files Modified This Session
 
-- 官方 PixiJS skill 已从仓库移除，改用本机 `~/.agents/skills/pixijs*`
-- `docs/pixijs-editor-plan.md` — 开发计划
-- `feature_list.json` — 编辑器特征
-- `AGENTS.md` / `.cursor/rules/pixijs.mdc` — 代理约束
-- `progress.md` / `session-handoff.md`
+- `src/router/routes.ts`、`src/router/routes.spec.ts`、`src/router/index.ts`
+- `src/views/editor/EditorPage.vue`
+- `src/main.ts`、`src/App.vue`
+- 删除 `src/components/HelloWorld.vue`；更新 `components.d.ts`
+- `openspec/changes/add-editor-router/tasks.md`
+- `feature_list.json`、`progress.md`、`session-handoff.md`
 
 ## Evidence of Completion
 
-- [x] `npx skills add pixijs/pixijs-skills`：26 skills 已安装
-- [x] 计划文档与 feature 列表已写入仓库
-- [ ] Tests / lint / build：本会话未跑满 `./init.sh`
+- [x] `pnpm test:run`：2 files / 8 tests passed（含 routes 3）
+- [x] `pnpm run lint`：pass
+- [x] `pnpm run build`：vue-tsc + vite build pass；产物含 `EditorPage` chunk
+- [x] `openspec validate add-editor-router --strict`：valid
+- [x] 已归档为 `openspec/changes/archive/2026-08-17-add-editor-router`；主 spec `editor-router` 已同步
+- [ ] 手工刷新 `/` 与 `/editor`：请本地 `pnpm dev` 确认看到「编辑器」、无 Vite 演示页
 
 ## Notes for Next Session
 
-读 `AGENTS.md` → `docs/pixijs-editor-plan.md` → `feature_list.json`。只做 feat-003。Pixi 代码先读本机 `~/.agents/skills/pixijs/SKILL.md`。
+归档本 change 后再 `/opsx-propose` feat-004。不要在本 change 里做布局或安装 pixi.js。
