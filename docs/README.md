@@ -16,7 +16,8 @@
 ## 建议阅读顺序
 
 1. 本页（地图）
-2. [`product/editor-plan.md`](./product/editor-plan.md) — 目标与阶段
+2. [`product/editor-plan.md`](./product/editor-plan.md) — 开发计划  
+   [`product/handbook/`](./product/handbook/) — 功能架构与开发迭代手册（3～6 个月）
 3. [`editor/architecture.md`](./editor/architecture.md) — 分层与数据流
 4. 当前要改的模块（见 [`editor/README.md`](./editor/README.md)）
 5. [`process/openspec.md`](./process/openspec.md) — 开 change 前
@@ -29,6 +30,6 @@
 | `docs/openspec.md` | [`process/openspec.md`](./process/openspec.md) |
 | `docs/tdd.md` | [`process/tdd.md`](./process/tdd.md) |
 | `docs/pixijs-editor-plan.md` | [`product/editor-plan.md`](./product/editor-plan.md) |
-| `docs/pixijs-editor-dev-scheme.md` | [`product/editor-scheme.md`](./product/editor-scheme.md) |
+| `docs/pixijs-editor-dev-scheme.md` | [`product/editor-plan.md`](./product/editor-plan.md)（已与 plan 合并） |
 | `docs/codegraph-context.md` | [`tooling/codegraph.md`](./tooling/codegraph.md) |
 | `docs/pixijs-mcp.md` | [`tooling/pixijs-mcp.md`](./tooling/pixijs-mcp.md) |

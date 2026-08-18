@@ -2,43 +2,41 @@
 
 ## Current State
 
-**Last Updated:** 2026-08-17 15:55
-**Session ID:** docs-modularize-and-design-zh
-**Active Feature:** 文档按模块拆分 + OpenSpec `design.md` 中文/流程图约定。feat-008 已有进行中 change `add-selection-transform`（仅 proposal，未完）
+**Last Updated:** 2026-08-18 10:40
+**Session ID:** merge-editor-plan
+**Active Feature:** 已将 `editor-plan` 与 `editor-scheme` 合并为 `docs/product/editor-plan.md`。下一产品刀仍是 feat-008
 
 ## Status
 
 ### What's Done
 
-- [x] `docs/` 按 `process/`、`product/`、`editor/`、`tooling/` 分目录；入口 `docs/README.md`
-- [x] 已落地模块写了 `docs/editor/`（architecture / shell / pixi-app / scene / viewport），后续 feat 用 `_template.md`
-- [x] 默认 schema 改为仓库内 `spec-driven-zh`：`design.md` 必须中文，且至少一张 mermaid 图
-- [x] AGENTS / Cursor rules / `openspec/config.yaml` / `sdd-workflow` 主 spec 已改引用
+- [x] `editor-plan.md` 与 `editor-scheme.md` 已合并为单一开发计划；`editor-scheme.md` 已删除
+- [x] 《基于 PixiJS 的画布图片编辑器功能架构与开发迭代手册》按提示词 01–30 章落地
+- [x] 结合现有工程：Pinia 真源、单向 sync、不引入第二 Engine 真源；决策用【保持/优化/新增/演进】
+- [x] `docs/README.md`、`docs/product/README.md`、`editor-plan.md` 已链到手册
+- [x] feat-022 记为 done
 
 ### What's In Progress
 
-- [ ] feat-008 / `add-selection-transform`：仅有 `proposal.md`，规划未完成（本会话未实现）
-- [ ] 浏览器手工确认视口（平移 / 滚轮 / 适配 / 导入 / 拖动窗口）
+- [ ] feat-008 / `add-selection-transform`：仅有 `proposal.md`
+- [ ] 浏览器手工确认视口
 
 ### What's Next
 
-1. 人审文档目录与 `spec-driven-zh` 后，用 `/opsx-propose` 或继续 `add-selection-transform` 做 feat-008
-2. 新 change 的 `design.md` 应走中文模板（`openspec instructions design`）
-3. 归档 feat 后补 `docs/editor/<模块>.md`
+1. 人审手册后按 Phase A 做 feat-008
+2. 归档功能后补 `docs/editor/<模块>.md`，手册模块章保持稳定、细节以 editor 文档为准
 
 ## Blockers / Risks
 
-- [ ] `openspec validate --all` 会因不完整的 `add-selection-transform` 失败（缺 tasks 等产物）
-- [ ] 本环境未跑浏览器手工验收
+- [ ] 不完整的 `add-selection-transform` 会使 `openspec validate --all` 失败
+- [ ] 手册中 Photopea/Figma 以外产品的渲染内核标为推测，未当事实
 
 ## Decisions Made
 
-- 产品总方案留在 `docs/product/`，已落地设计按模块写进 `docs/editor/`，避免 scheme 无限变长
-- 不另起自定义工作流阶段，只 fork `spec-driven` 改 design 模板与 instruction
-- 归档历史里的旧路径不改写；`docs/README.md` 提供对照表
+- 手册分册：`handbook/README.md` + 02～07，避免单文件过大
+- 不新建与 Pinia 平行的 `EditorEngine` 真源；门面列为后续演进
+- Object = 扩展现有 `BaseLayer`，不另起 EditorObject 体系
 
 ## Evidence of Completion
 
-- [x] `openspec schema validate spec-driven-zh` 通过
-- [x] `openspec schema which spec-driven-zh` → Source: project
-- [x] 主 spec `openspec validate --specs`：sdd-workflow 等 7 项通过
+- [x] `docs/product/handbook/` 七份 Markdown 覆盖提示词 30 章

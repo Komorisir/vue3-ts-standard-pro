@@ -1,6 +1,6 @@
 # 编辑器模块文档
 
-按 `src/editor/` 与 OpenSpec capability 对齐。**新功能归档后在本目录新增一篇**，不要把实现细节继续堆进 `product/editor-scheme.md`。
+按 `src/editor/` 与 OpenSpec capability 对齐。**新功能归档后在本目录新增一篇**，不要把实现细节继续堆进 `product/editor-plan.md`。
 
 新模块可复制 [`_template.md`](./_template.md)。
 
@@ -29,4 +29,4 @@
 | 性能与释放 | `performance.md` | feat-016 |
 | 键盘与无障碍 | `a11y.md` | feat-018 |
 
-产品阶段总表仍在 [`../product/editor-scheme.md`](../product/editor-scheme.md) 第 6 节。
+产品阶段总表仍在 [`../product/editor-plan.md`](../product/editor-plan.md) 第 5 节。

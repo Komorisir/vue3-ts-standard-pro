@@ -6,7 +6,7 @@ context: |
   Render: PixiJS v8 only. Add with `pnpm add pixi.js`. Never run `create-pixi` over this repo.
   PixiJS hard rules: `new Application()` then `await app.init(options)`; mount `app.canvas`; destroy with official options; load via `Assets.load`; drag with `eventMode = 'static'` + `globalpointermove`.
   Architecture: Pinia document is the only business source of truth; Pixi scene syncs one-way from the document.
-  Docs map: docs/README.md. Process: docs/process/. Product background: docs/product/editor-plan.md and docs/product/editor-scheme.md. Landed modules: docs/editor/. Tooling: docs/tooling/.
+  Docs map: docs/README.md. Process: docs/process/. Product background: docs/product/editor-plan.md. Architecture handbook: docs/product/handbook/. Landed modules: docs/editor/. Tooling: docs/tooling/.
   Execution tracker: feature_list.json (one unfinished feature at a time).
   Agent harness: AGENTS.md, progress.md, init.sh, session-handoff.md.
   Codegraph first for symbol/call/impact questions.
@@ -21,7 +21,7 @@ rules:
     - Keep one intent that can be stated in a single sentence
     - Include Non-goals
     - Map the change to a feature_list.json id when one exists
-    - Point to the relevant section of docs/product/editor-scheme.md and docs/editor/ instead of restating the whole plan
+    - Point to the relevant section of docs/product/editor-plan.md and docs/editor/ instead of restating the whole plan
   specs:
     - Use RFC 2119 MUST/SHALL/SHOULD/MAY
     - Every requirement needs at least one GIVEN/WHEN/THEN scenario

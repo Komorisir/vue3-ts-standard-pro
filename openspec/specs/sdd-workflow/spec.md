@@ -25,7 +25,7 @@ The project SHALL require an active OpenSpec change before an agent implements a
 Existing product documents SHALL remain background material. The project MUST NOT bulk-convert the full editor plan into main specs in a single change.
 
 #### Scenario: Plan documents remain in docs
-- **GIVEN** `docs/product/editor-plan.md` and `docs/product/editor-scheme.md` exist
+- **GIVEN** `docs/product/editor-plan.md` exists as the product development plan
 - **AND** `docs/README.md` maps process, product, editor, and tooling docs
 - **WHEN** SDD is initialized
 - **THEN** those files remain the product background

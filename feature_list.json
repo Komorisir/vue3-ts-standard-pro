@@ -41,6 +41,14 @@
       "evidence": "docs/README.md；openspec/schemas/spec-driven-zh；config.yaml schema=spec-driven-zh；sdd-workflow 已增加中文 design 要求"
     },
     {
+      "id": "feat-022",
+      "name": "功能架构与开发迭代手册",
+      "description": "按调研提示词输出《基于 PixiJS 的画布图片编辑器功能架构与开发迭代手册》，结合现有 Pinia+Pixi 分层，含模块模板、依赖 DAG、P0–P3 路线与任务号",
+      "dependencies": ["feat-021"],
+      "status": "done",
+      "evidence": "docs/product/handbook/；入口 README + 02～07 分册"
+    },
+    {
       "id": "feat-003",
       "name": "接入 vue-router 与编辑器路由",
       "description": "注册 vue-router，默认进入 /editor，为画布页提供稳定路由入口",

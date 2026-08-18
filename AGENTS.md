@@ -93,7 +93,7 @@ Required checks:
 If you encounter:
 
 - **Architecture decisions**: Consult `docs/tooling/codegraph.md`、`docs/editor/` and Codegraph, otherwise ask user
-- **Unclear requirements**: Check OpenSpec change + `docs/product/editor-scheme.md` + `docs/editor/`, otherwise ask user
+- **Unclear requirements**: Check OpenSpec change + `docs/product/editor-plan.md` + `docs/editor/`, otherwise ask user
 - **Repeated test failures**: Update progress, flag for human review
 - **Scope ambiguity**: Re-read the active OpenSpec change and `feature_list.json`
 - **Codegraph not initialized**: 询问是否执行 `codegraph init -i`，不要静默跳过
