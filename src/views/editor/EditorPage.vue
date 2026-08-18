@@ -6,7 +6,7 @@
 import CanvasHost from '@/editor/components/CanvasHost.vue'
 import EditorSidePanel from '@/editor/components/EditorSidePanel.vue'
 import EditorToolbar from '@/editor/components/EditorToolbar.vue'
-import EditorToolRail from '@/editor/components/EditorToolRail.vue'
+import EditorWorkspaceNav from '@/editor/components/EditorWorkspaceNav.vue'
 import EditorLayout from '@/layouts/EditorLayout.vue'
 </script>
 
@@ -16,7 +16,7 @@ import EditorLayout from '@/layouts/EditorLayout.vue'
       <EditorToolbar />
     </template>
     <template #tools>
-      <EditorToolRail />
+      <EditorWorkspaceNav />
     </template>
     <template #canvas>
       <CanvasHost />

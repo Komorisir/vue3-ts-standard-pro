@@ -25,11 +25,12 @@ flowchart TB
   subgraph objects [对象]
     Img[图片]
     Txt[文字]
-    Shp[形状/标注]
+    Shp[形状与贴纸]
   end
   subgraph edit [编辑]
-    Crop[裁剪]
-    Flt[滤镜]
+    Crop[裁剪/旋转/尺寸]
+    Flt[滤镜调色]
+    Cut[抠图与换背景]
     Mask[蒙版]
     Fx[特效]
   end
@@ -46,6 +47,7 @@ flowchart TB
   Sel --> Coord
   Img --> Crop
   Img --> Flt
+  Img --> Cut
   Scene --> Exp
 ```
 

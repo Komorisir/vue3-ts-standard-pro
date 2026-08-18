@@ -32,12 +32,12 @@
   margin: 0 0 8px;
   font-size: 13px;
   font-weight: 600;
-  color: rgb(255 255 255 / 88%);
+  color: rgb(0 0 0 / 88%);
 }
 
 .editor-side-panel__hint {
   margin: 0;
   font-size: 12px;
-  color: rgb(255 255 255 / 45%);
+  color: rgb(0 0 0 / 45%);
 }
 </style>

@@ -1,15 +1,17 @@
 import { describe, expect, it } from 'vitest'
+import { CHROME_HOST_BACKGROUND } from '@/editor/model/chromeTheme'
 import { createPixiAppInitOptions, PIXI_APP_DESTROY_RENDERER, PIXI_APP_DESTROY_STAGE } from './pixiAppOptions'
 
 describe('createPixiAppInitOptions', () => {
-  it('points resizeTo at the given host and prefers WebGL with a dark background', () => {
+  it('points resizeTo at the given host and prefers WebGL with a host-matched background', () => {
     const host = document.createElement('div')
     const options = createPixiAppInitOptions(host)
 
     expect(options.resizeTo).toBe(host)
     expect(options.preference).toBe('webgl')
     expect(options.autoDensity).toBe(true)
-    expect(options.background).toBe('#1a1a1a')
+    expect(options.background).toBe(CHROME_HOST_BACKGROUND)
+    expect(options.background).toBe('#ebebeb')
   })
 })
 

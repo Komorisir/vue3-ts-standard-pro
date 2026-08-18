@@ -9,7 +9,7 @@
 | 模块 | 文档 | 代码 | OpenSpec | feature |
 |---|---|---|---|---|
 | 分层与数据流 | [architecture.md](./architecture.md) | `src/editor/`、`src/shared/` | — | 全程 |
-| 路由与应用壳 | [shell.md](./shell.md) | `src/router/`、`src/layouts/`、`src/editor/components/` | `editor-router`、`editor-shell` | feat-003、004 |
+| 路由与应用壳 | [shell.md](./shell.md) | `src/router/`、`src/layouts/`、`src/editor/components/` | `editor-router`、`editor-shell` | feat-003、004、031、036 |
 | Pixi Application | [pixi-app.md](./pixi-app.md) | `src/editor/core/` | `pixi-application` | feat-005 |
 | 场景与导入 | [scene.md](./scene.md) | `src/editor/scene/`、`assets/`、`model/image*` | `scene-import` | feat-006 |
 | 视口平移缩放 | [viewport.md](./viewport.md) | `model/viewportMath.ts`、`tools/useViewportGestures.ts` | `viewport-navigation` | feat-007 |
@@ -20,10 +20,14 @@
 |---|---|---|
 | 选择与变换 | `transform.md` | feat-008 |
 | 图层模型与面板 | `layers.md` | feat-009 |
-| 裁剪与蒙版 | `crop.md` | feat-010 |
+| 矩形裁剪（调整） | `crop.md` | feat-010 |
+| 修改尺寸（调整） | `resize.md` | feat-032 |
+| 形状与 Alpha 蒙版 | `mask.md` | feat-024 |
 | 滤镜调色 | `filters.md` | feat-011 |
 | 文字图层 | `text.md` | feat-012 |
-| 矢量标注 | `annotate.md` | feat-013 |
+| 素材几何（矩形/圆） | `shapes.md` | feat-013 |
+| 贴纸置入 | `assets.md` | feat-026 |
+| 抠图与换背景 | `cutout.md` | feat-033 |
 | 撤销重做 | `history.md` | feat-014 |
 | 导出 | `export.md` | feat-015 |
 | 性能与释放 | `performance.md` | feat-016 |

@@ -1,178 +1,379 @@
 {
+  "schema": "module-first",
+  "note": "执行顺序按 modules[].order。id 稳定不改号。一次只做一项 not-started。",
+  "modules": [
+    { "id": "harness", "name": "工程底座", "order": 1, "summary": "Agent / SDD / TDD / 文档" },
+    { "id": "canvas", "name": "画布底座", "order": 2, "summary": "路由、四区、Pixi、导入、视口" },
+    { "id": "chrome", "name": "壳层布局", "order": 3, "summary": "美图左 Tab + 顶栏三分区 + 浅色" },
+    { "id": "toolbar", "name": "顶栏能力", "order": 4, "summary": "撤销重做、保存导出、高级导出" },
+    { "id": "adjust", "name": "调整", "order": 5, "summary": "选择变换、裁剪、修改尺寸" },
+    { "id": "color", "name": "滤镜调色", "order": 6, "summary": "预设与四滑条" },
+    { "id": "materials", "name": "素材", "order": 7, "summary": "矩形/圆、贴纸、文字" },
+    { "id": "cutout", "name": "抠图", "order": 8, "summary": "手动/自动抠图、换背景；蒙版另项" },
+    { "id": "portrait", "name": "人像", "order": 9, "summary": "调研，不排期实现" },
+    { "id": "brush", "name": "画笔", "order": 10, "summary": "调研，不排期实现" },
+    { "id": "layers", "name": "图层与对象", "order": 11, "summary": "右侧列表、特效、多选分组" },
+    { "id": "quality", "name": "质量", "order": 12, "summary": "性能、测试、键盘" },
+    { "id": "project", "name": "工程演进", "order": 13, "summary": "多页、序列化、AI 写回" }
+  ],
   "features": [
     {
       "id": "feat-001",
+      "module": "harness",
       "name": "Agent Harness 初始化",
       "description": "落地 AGENTS.md、feature_list.json、progress.md、init.sh、session-handoff.md，形成可重启的 agent 工作流",
+      "priority": "P0",
       "dependencies": [],
       "status": "done",
       "evidence": "harness-creator 已写入五大子系统；validate-harness Overall 100/100"
     },
     {
       "id": "feat-002",
+      "module": "harness",
       "name": "Codegraph 图谱构建与注入",
       "description": "执行 codegraph init -i，将 MCP 用法写入 harness 启动路径与 Cursor 规则",
+      "priority": "P0",
       "dependencies": ["feat-001"],
       "status": "done",
       "evidence": "9 files / 53 nodes / 82 edges；.cursor/rules/codegraph.mdc"
     },
     {
       "id": "feat-019",
+      "module": "harness",
       "name": "SDD + TDD + Harness 规范搭建",
       "description": "接入 OpenSpec、Vitest 与 TDD 约定，并注入 AGENTS/init 工作流；不实现编辑器功能",
+      "priority": "P0",
       "dependencies": ["feat-001", "feat-002"],
       "status": "done",
       "evidence": "OpenSpec init + change 2026-08-17-setup-sdd-tdd-harness 已归档；pnpm test:run 5 passed；lint/build/openspec validate --all 通过"
     },
     {
       "id": "feat-020",
+      "module": "harness",
       "name": "编码规范落地",
       "description": "写入职责单一、分层隔离、低耦合、复用、容错与注释约定，并注入 AGENTS / Cursor / OpenSpec",
+      "priority": "P0",
       "dependencies": ["feat-019"],
       "status": "done",
       "evidence": "docs/process/coding-standards.md；.cursor/rules/coding-standards.mdc；AGENTS.md 与 openspec/config.yaml 已引用"
     },
     {
       "id": "feat-021",
+      "module": "harness",
       "name": "文档按模块拆分与 design.md 中文约定",
       "description": "docs/ 按 process/product/editor/tooling 分目录；OpenSpec 使用 spec-driven-zh，design.md 必须中文并含 mermaid 流程图",
+      "priority": "P0",
       "dependencies": ["feat-020"],
       "status": "done",
       "evidence": "docs/README.md；openspec/schemas/spec-driven-zh；config.yaml schema=spec-driven-zh；sdd-workflow 已增加中文 design 要求"
     },
     {
       "id": "feat-022",
+      "module": "harness",
       "name": "功能架构与开发迭代手册",
       "description": "按调研提示词输出《基于 PixiJS 的画布图片编辑器功能架构与开发迭代手册》，结合现有 Pinia+Pixi 分层，含模块模板、依赖 DAG、P0–P3 路线与任务号",
+      "priority": "P0",
       "dependencies": ["feat-021"],
       "status": "done",
-      "evidence": "docs/product/handbook/；入口 README + 02～07 分册"
+      "evidence": "docs/product/handbook/；入口 README + 02～07 分册；editor-plan 已合并 scheme"
     },
     {
       "id": "feat-003",
+      "module": "canvas",
       "name": "接入 vue-router 与编辑器路由",
       "description": "注册 vue-router，默认进入 /editor，为画布页提供稳定路由入口",
+      "priority": "P0",
       "dependencies": ["feat-001"],
       "status": "done",
       "evidence": "add-editor-router 已实现：`/` 与 catch-all 重定向 /editor；pnpm test:run 8 passed；lint/build/openspec validate --strict 通过。手工：pnpm dev 后刷新 / 与 /editor 应见「编辑器」占位"
     },
     {
       "id": "feat-004",
+      "module": "canvas",
       "name": "编辑器应用壳",
       "description": "EditorLayout：顶栏、左侧工具、中央画布 host、右侧属性面板，替换 HelloWorld",
+      "priority": "P0",
       "dependencies": ["feat-003"],
       "status": "done",
       "evidence": "2026-08-17-add-editor-shell 已归档；主 spec editor-shell + editor-router 已同步；pnpm test:run 11 passed；lint/build/openspec validate --strict 通过。手工：四区可见、host 有面积、窗口缩放 host 仍在中央"
     },
     {
       "id": "feat-005",
+      "module": "canvas",
       "name": "安装 PixiJS 并封装 Application",
       "description": "pnpm add pixi.js；usePixiApp 负责 new Application + await init、挂载 app.canvas、卸载 destroy",
+      "priority": "P0",
       "dependencies": ["feat-004"],
       "status": "done",
       "evidence": "add-pixi-app 已实现：pixi.js 8.19.0；createPixiAppInitOptions TDD 3 passed；usePixiApp 挂载 app.canvas 并官方 destroy；pnpm test:run 5 files / 14 tests；lint/build/init.sh/openspec validate --strict 通过。手工：/editor 一块 canvas、深色空舞台、空态文案仍可见、缩放跟 host、离开再进仍一块 canvas"
     },
     {
       "id": "feat-006",
+      "module": "canvas",
       "name": "场景分层与图片导入",
-      "description": "建立 viewport/world/content 分层；本地文件经 Assets.load 显示为 Sprite",
+      "description": "建立 viewport/world/content 分层；本地 JPEG/PNG/WebP 经 Assets.load 显示为 Sprite；MVP 主图一张、再导入替换。顶栏「打开」已接线",
+      "priority": "P0",
       "dependencies": ["feat-005"],
       "status": "done",
       "evidence": "2026-08-17-add-scene-import 已归档；主 spec scene-import 新建，editor-shell / pixi-application 已同步。主图仅一张、再次导入替换；Open/拖入/空态点击导入 JPEG/PNG/WebP。pnpm test:run 8 files / 21 tests；lint/build/init.sh/openspec validate --strict 通过。手工待确认：居中、替换主图、坏文件错误、hint 隐藏、进出页一块 canvas"
     },
     {
       "id": "feat-007",
+      "module": "canvas",
       "name": "视口平移与缩放",
-      "description": "拖动画布平移、滚轮缩放、适配窗口；resizeTo 指向 host",
+      "description": "拖动画布平移、滚轮指针锚点缩放、适配窗口；视口与图层 transform 分离；resizeTo 指向 host。顶栏「适配」已接线",
+      "priority": "P0",
       "dependencies": ["feat-006"],
       "status": "done",
       "evidence": "已归档 openspec/changes/archive/2026-08-17-add-viewport-pan-zoom。视口数学 TDD；Pinia viewport 与图层 transform 分离；平移/空格/中键；滚轮指针锚点缩放；导入与 host 尺寸变化后 fitView；ResizeObserver 后 app.resize()。pnpm test:run 9 files / 28 tests。主 spec 已同步 viewport-navigation / scene-import / editor-shell / pixi-application。手工验收仍待浏览器确认。"
     },
     {
-      "id": "feat-008",
-      "name": "选择与变换",
-      "description": "选中对象后移动/缩放/旋转；eventMode static + globalpointermove；手柄用 Graphics",
-      "dependencies": ["feat-007"],
-      "status": "not-started",
-      "evidence": ""
+      "id": "feat-031",
+      "module": "chrome",
+      "name": "美图式左侧工作区导航",
+      "description": "左侧分类 Tab + 邻接面板：调整、滤镜调色、人像、抠图、画笔、素材；默认调整；未落地工作区只占位；切 Tab 不重挂画布 host",
+      "priority": "P1",
+      "dependencies": ["feat-004", "feat-007"],
+      "status": "done",
+      "evidence": "已归档 openspec/changes/archive/2026-08-18-add-left-workspace-tabs。workspaceTabs TDD；EditorWorkspaceNav 双列；切 Tab 不重挂 host。主 spec editor-shell 已同步。./init.sh 通过；pnpm test:run 11 files / 32 tests。手工待浏览器确认六 Tab 与一块 canvas。"
     },
     {
-      "id": "feat-009",
-      "name": "图层模型与图层面板",
-      "description": "Pinia 为图层真源，同步显隐/排序/锁定到场景图",
-      "dependencies": ["feat-008"],
-      "status": "not-started",
-      "evidence": ""
-    },
-    {
-      "id": "feat-010",
-      "name": "裁剪与蒙版",
-      "description": "矩形裁剪与遮罩，结果可继续变换",
-      "dependencies": ["feat-009"],
-      "status": "not-started",
-      "evidence": ""
-    },
-    {
-      "id": "feat-011",
-      "name": "滤镜调色",
-      "description": "亮度、对比度、饱和度、色相；滑条实时预览，可重置",
-      "dependencies": ["feat-009"],
-      "status": "not-started",
-      "evidence": ""
-    },
-    {
-      "id": "feat-012",
-      "name": "文字图层",
-      "description": "添加可变换的 Text 图层，支持字号与颜色",
-      "dependencies": ["feat-009"],
-      "status": "not-started",
-      "evidence": ""
-    },
-    {
-      "id": "feat-013",
-      "name": "矢量标注",
-      "description": "矩形、椭圆、箭头、画笔，标注可再选中编辑",
-      "dependencies": ["feat-008"],
-      "status": "not-started",
-      "evidence": ""
+      "id": "feat-036",
+      "module": "chrome",
+      "name": "美图顶栏与浅色壳",
+      "description": "顶栏左中右（品牌+打开 / 历史+撤销重做 / 适配+保存）；浅色壳与粉红强调。不接线新业务、不抄会员头像；切肤色不重挂 canvas",
+      "priority": "P1",
+      "dependencies": ["feat-031"],
+      "status": "done",
+      "evidence": "已归档 openspec/changes/archive/2026-08-18-add-left-workspace-tabs（与 feat-031 同 change）。chromeTheme TDD；顶栏三分区；浅色壳 + #ff4d6d 强调；Pixi background 跟 host #ebebeb。主 spec editor-shell / pixi-application 已同步。./init.sh 通过。手工待浏览器确认浅色壳与三分区。"
     },
     {
       "id": "feat-014",
+      "module": "toolbar",
       "name": "撤销重做",
-      "description": "命令栈覆盖变换、图层、滤镜；Ctrl+Z / Ctrl+Y",
+      "description": "顶栏中区：Command 栈覆盖变换、图层、裁剪、滤镜、文字；手势 pointerup 提交一条；Ctrl+Z / Ctrl+Y；objectURL 延迟 revoke",
+      "priority": "P1",
       "dependencies": ["feat-009"],
       "status": "not-started",
       "evidence": ""
     },
     {
       "id": "feat-015",
+      "module": "toolbar",
       "name": "导出图片",
-      "description": "导出 PNG/JPEG，不含 overlay 选框，分辨率正确",
-      "dependencies": ["feat-006"],
+      "description": "顶栏右区保存/导出：PNG/JPEG；隐藏 overlay 后 extract world；分辨率按文档边界不被视口裁切。2x/WebP 见 feat-029",
+      "priority": "P1",
+      "dependencies": ["feat-006", "feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-029",
+      "module": "toolbar",
+      "name": "高级导出",
+      "description": "顶栏导出增强：2x 倍率、WebP、透明 PNG、超 MAX_TEXTURE_SIZE 时降 scale 并提示。PDF/分块拼图另立",
+      "priority": "P2",
+      "dependencies": ["feat-015"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-008",
+      "module": "adjust",
+      "name": "选择与变换",
+      "description": "调整前置：单选主图；overlay 包围盒 + 8 向手柄 + 旋转点；只改文档 transform。调整面板旋转复用本项。多选留给 feat-025",
+      "priority": "P0",
+      "dependencies": ["feat-007"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-010",
+      "module": "adjust",
+      "name": "矩形裁剪",
+      "description": "调整 Tab：非破坏 Crop Model 写入 ImageLayer.crop；overlay 拉框确认/取消；原 objectURL 不变。椭圆/alpha 蒙版见 feat-024",
+      "priority": "P1",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-032",
+      "module": "adjust",
+      "name": "修改尺寸",
+      "description": "调整 Tab：数字改显示宽高，可锁比例，写 transform.scaleX/Y；与手柄缩放同一真源。不改视口、不改原图像素文件",
+      "priority": "P1",
+      "dependencies": ["feat-008"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-011",
+      "module": "color",
+      "name": "滤镜调色",
+      "description": "滤镜调色 Tab：亮度、对比度、饱和度、色相写入 ColorAdjust；可选矩阵预设；ColorMatrixFilter 预览；滑条松手写文档；可重置。Blur/LUT 不在本项",
+      "priority": "P1",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-013",
+      "module": "materials",
+      "name": "几何绘制",
+      "description": "素材 Tab：画布绘制矩形、圆/椭圆为 ShapeLayer，完成后可再选中。画笔见 feat-035；贴纸见 feat-026",
+      "priority": "P1",
+      "dependencies": ["feat-008", "feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-026",
+      "module": "materials",
+      "name": "贴纸与图形置入",
+      "description": "素材 Tab：本地/内置贴纸与图形置入后仍为 ImageLayer 或 ShapeLayer；最近使用。不做云盘登录",
+      "priority": "P2",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-012",
+      "module": "materials",
+      "name": "文字图层",
+      "description": "点画布创建可变换 TextLayer；字号与颜色；MVP 用 Pixi Text。入口可挂素材或顶栏，不单开 Tab。富文本不在本项",
+      "priority": "P1",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-033",
+      "module": "cutout",
+      "name": "抠图与换背景",
+      "description": "抠图 Tab：手动修边缘；抠完可换纯色或图片背景；自动抠图结果写回同一图层模型。与 feat-010 crop、feat-024 mask 分开",
+      "priority": "P2",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-024",
+      "module": "cutout",
+      "name": "形状与 Alpha 蒙版",
+      "description": "在矩形 crop 之外支持椭圆/Graphics mask；不默认 Sprite/alpha 滤镜蒙版。与 feat-033 抠图工作流分开立项",
+      "priority": "P2",
+      "dependencies": ["feat-010"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-034",
+      "module": "portrait",
+      "name": "人像能力调研",
+      "description": "人像 Tab 占位。美颜/瘦脸等先调研再立项，本项不实现产品行为、不写 OpenSpec 实现 change",
+      "priority": "P3",
+      "dependencies": ["feat-031"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-035",
+      "module": "brush",
+      "name": "画笔工具调研",
+      "description": "画笔 Tab 占位。多种画笔（硬边/软边/橡皮等）先调研再立项，不与 feat-013 几何绘制混做",
+      "priority": "P3",
+      "dependencies": ["feat-031"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-009",
+      "module": "layers",
+      "name": "图层模型与图层面板",
+      "description": "右侧：打破仅一张主图；Pinia layers[] 为真源；显隐/锁定/重命名/拖拽排序；sync 按 id 增删改。调整/滤镜/素材的前置",
+      "priority": "P1",
+      "dependencies": ["feat-008"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-023",
+      "module": "layers",
+      "name": "图层特效",
+      "description": "右侧属性：opacity、描边、阴影、混合模式写入 BaseLayer 并由 scene 同步。斜面浮雕不做",
+      "priority": "P2",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-025",
+      "module": "layers",
+      "name": "多选、对齐与分组",
+      "description": "框选/Shift 多选；对齐与分布；GroupLayer。3D 变换不做",
+      "priority": "P2",
+      "dependencies": ["feat-009"],
       "status": "not-started",
       "evidence": ""
     },
     {
       "id": "feat-016",
+      "module": "quality",
       "name": "性能与资源释放",
-      "description": "销毁纹理、大图 culling、离开页释放 GPU，反复进出无泄漏",
+      "description": "删层销毁纹理、Assets.unload、进出页无泄漏；大图 cullable（GPU bound 时）",
+      "priority": "P1",
       "dependencies": ["feat-005"],
       "status": "not-started",
       "evidence": ""
     },
     {
       "id": "feat-017",
+      "module": "quality",
       "name": "补充编辑器纯逻辑测试",
-      "description": "为文档模型、命令栈、导出纯函数补充 vitest（运行器已在 feat-019 接入）",
+      "description": "为文档模型、命令栈、裁剪矩形、导出纯函数补充 vitest（运行器已在 feat-019 接入）",
+      "priority": "P1",
       "dependencies": ["feat-014", "feat-019"],
       "status": "not-started",
       "evidence": ""
     },
     {
       "id": "feat-018",
+      "module": "quality",
       "name": "键盘与无障碍",
-      "description": "方向键微调、Tab 可达、画布 accessibleTitle",
-      "dependencies": ["feat-008"],
+      "description": "方向键微调、Delete 删层、Ctrl+0 适配、工具快捷键；Tab 可达；画布 accessibleTitle。焦点在 input 内不抢键",
+      "priority": "P1",
+      "dependencies": ["feat-008", "feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-027",
+      "module": "project",
+      "name": "多页画布",
+      "description": "pages: EditorDocument[] 仍走同一 Pinia 真源，不新开引擎",
+      "priority": "P3",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-028",
+      "module": "project",
+      "name": "工程保存与序列化",
+      "description": "导出/导入 project JSON（不含 objectUrl）；反序列化后重新 Assets.load。IndexedDB 自动保存可后做",
+      "priority": "P3",
+      "dependencies": ["feat-009"],
+      "status": "not-started",
+      "evidence": ""
+    },
+    {
+      "id": "feat-030",
+      "module": "project",
+      "name": "AI 能力写入图层",
+      "description": "异步服务结果写回 Pinia 图层，不进 Pixi 内核。自动抠图可复用本契约。非默认能力",
+      "priority": "P3",
+      "dependencies": ["feat-009"],
       "status": "not-started",
       "evidence": ""
     }

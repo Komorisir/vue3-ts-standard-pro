@@ -1,7 +1,7 @@
 # PixiJS 图片画布编辑器开发计划
 
 产品执行计划（原 `editor-plan.md` + `editor-scheme.md` 合并）。  
-执行进度以仓库根目录 `feature_list.json` 为准；已落地模块见 [`../editor/`](../editor/)。  
+执行进度以仓库根目录 `feature_list.json` 为准（按 `modules[].order` 编排）；已落地模块见 [`../editor/`](../editor/)。  
 模块设计、调研与 3～6 个月路线见 [`handbook/`](./handbook/)。不要把本文整份灌进 `openspec/specs/`。
 
 | 项 | 值 |
@@ -10,7 +10,7 @@
 | 壳层 | Vue 3 + TypeScript + Vite + Pinia + Ant Design Vue + vue-router |
 | 渲染 | PixiJS v8（`pnpm add pixi.js`，禁止 `create-pixi` 覆盖仓库） |
 | MVP 工期 | 约 24 人日（单人连续，不含联调；003–007 已消耗） |
-| 当前基线 | feat-003～007 已归档：`/editor`、四区壳、Application、主图导入、视口平移缩放 |
+| 当前基线 | feat-003～007、031、036 已归档；壳层浅色三分区已落地 |
 | 下一刀 | **feat-008** 选择与变换 |
 
 一次只做 `feature_list.json` 中一项，完成后跑 `./init.sh`，再 `/opsx-archive`。归档后补 [`../editor/<模块>.md`](../editor/)。
@@ -40,7 +40,7 @@
 const app = new Application()
 await app.init({
   resizeTo: hostEl,
-  background: '#1a1a1a',
+  background: '#ebebeb',
   antialias: true,
   autoDensity: true,
   resolution: window.devicePixelRatio,
@@ -194,48 +194,48 @@ interface Command {
 
 ## 4. 界面
 
+壳层**参考美图**：浅色顶栏三分区 + 左侧图标 Tab + 二级面板。能力地图见 handbook [1.2a](./handbook/README.md)～[1.2c](./handbook/README.md)。迭代按「先壳层 036，再左侧 Tab 逐个接线」。
+
 ```
-┌──────── 顶栏：打开 / 撤销重做 / 适配 / 导出 ────────┐
-│ 工具 │                 画布 host                  │ 图层 │
-│ 选择 │              #pixi-host                    │ 列表 │
-│ 平移 │                                            │─────│
-│ 裁剪 │                                            │ 属性 │
-│ 文字 │                                            │ 变换 │
-│ 形状 │                                            │ 滤镜 │
-└──────────────────────────────────────────────────┘
+┌─ 左：品牌 / 打开 ── 中：历史 / 撤销 / 重做 ── 右：适配 / 保存 ─┐
+│ Tab │ 二级面板        │   浅灰画布 host    │ 图层 │
+│ 调整│ 裁剪 / 旋转 / 尺寸│  #pixi-host      │ 列表 │
+│ 滤镜│ 滤镜 + 调色     │                    │ 属性 │
+│ 人像│ 调研占位        │                    │      │
+│ 抠图│ 自动 / 手动 / 换背景 │                │      │
+│ 画笔│ 调研占位        │                    │      │
+│ 素材│ 贴纸 + 矩形 / 圆 │                    │      │
+└──────────────────────────────────────────────────────────┘
 ```
 
-- 空文档：host 显示「拖入图片或点击打开」
-- 画布区必须是稳定 DOM，`usePixiApp` 的 `resizeTo` 指向它
+- 顶栏白底；选中 Tab 与「保存」用同一强调色；host `#ebebeb`
+- `#pixi-host` 稳定宽高；切 Tab、改肤色不得重挂 Pixi
 - 面板用 Ant Design Vue；画布交互全部在 Pixi
-- 快捷键：空格暂切平移（已有）；Ctrl+Z / Y、Delete、方向键、Ctrl+0 随 feat-014/018
+- 快捷键：空格暂切平移；Ctrl+Z / Y、Delete、方向键、Ctrl+0 随 feat-014/018
 
 ---
 
-## 5. 阶段方案
+## 5. 按功能模块
 
-与 handbook Phase A–E 对应。人日为单人估算。状态以 `feature_list.json` 为准。
+与 `feature_list.json` 的 `modules` 对齐。人日为单人估算。
 
 ### 总表
 
-| Phase | 手册 | ID | 内容 | 状态 | 人日 | 验收 | Skill |
-|---|---|---|---|---|---|---|---|
-| P0 底座 | 已完成 | feat-003 | 注册 vue-router，默认 `/editor` | done | 0.5 | 刷新 `/` 与 `/editor` 进编辑器 | — |
-| | | feat-004 | EditorLayout 四区 + `#pixi-host` | done | 1 | 四区可见，host 有面积并随窗口变 | — |
-| | | feat-005 | `usePixiApp` init / 挂载 / destroy | done | 1 | 一块 canvas；离页再进仍一块 | pixijs-create, pixijs-application |
-| P1 能看 | 已完成 | feat-006 | 场景分层 + 本地导入 | done | 1.5 | JPEG/PNG/WebP 居中；坏文件提示 | pixijs-assets, sprite, container |
-| P2 可逛 | 已完成 | feat-007 | 视口平移、滚轮、适配 | done | 1.5 | 大图可逛；resize 不糊 | pixijs-math |
-| P2 可改 | **A** | feat-008 | 选择、移动、缩放、旋转 | not-started | 2.5 | 手柄拖拽；锁定不可变；点空白取消 | pixijs-events, math, graphics |
-| P3 图层 | **A** | feat-009 | 图层面板与场景同步 | not-started | 2 | 显隐/排序/锁定与画布一致 | pixijs-scene-container |
-| | **B** | feat-010 | 矩形裁剪 / 蒙版 | not-started | 2 | 非破坏 crop；结果可再变换 | masking |
-| P4 编辑 | **D** | feat-011 | 亮度/对比度/饱和度/色相 | not-started | 1.5 | 滑条预览，可重置 | pixijs-filters, color |
-| | **C** | feat-012 | 文字图层 | not-started | 1.5 | 添加、字号颜色、可变换 | pixijs-scene-text |
-| | **C** | feat-013 | 矩形/椭圆/箭头/画笔 | not-started | 2 | 矢量可再选中 | pixijs-scene-graphics |
-| P5 闭环 | **B** | feat-014 | 命令式撤销重做 | not-started | 2 | Ctrl+Z/Y 覆盖变换与滤镜 | — |
-| | **B** | feat-015 | 导出 PNG/JPEG | not-started | 1 | 无选框；分辨率按 world | extract |
-| P6 质量 | **E** | feat-016 | 纹理销毁、culling、无泄漏 | not-started | 1.5 | 反复进出无涨内存 | pixijs-performance |
-| | **E** | feat-017 | 模型/命令/导出纯函数测试 | not-started | 1.5 | `pnpm test:run` | — |
-| | **E** | feat-018 | 键盘与无障碍 | not-started | 1 | Tab/方向键；accessibleTitle | pixijs-accessibility |
+| 模块 | ID | 内容 | 状态 | 人日 | 验收 |
+|---|---|---|---|---|---|
+| 工程底座 | 001～022 等 | Harness / SDD | done | — | — |
+| 画布底座 | 003～007 | 路由、四区、Pixi、导入、视口 | done | — | 一块 canvas；大图可逛 |
+| 壳层布局 | 031 | 左六 Tab | done | 1 | 切 Tab 不卸 host |
+| 壳层布局 | **036** | 美图顶栏 + 浅色壳 | done | 1.5 | 打开/适配仍可用 |
+| 调整 | 008 | 选择变换 | not-started | 2.5 | 手柄准、锁定不可变 |
+| 图层与对象 | 009 | 图层面板（008 后先做） | not-started | 2 | 面板与画布一致 |
+| 调整 | 010 / 032 | 裁剪 / 尺寸 | not-started | 3 | 可再变换；数字=手柄 |
+| 顶栏能力 | 014 / 015 | 撤销 / 保存 | not-started | 3 | Ctrl+Z；导出无 overlay |
+| 滤镜调色 | 011 | 预设 + 四滑条 | not-started | 1.5 | 预览=导出 |
+| 素材 | 013 / 012 / 026 | 几何 / 文字 / 贴纸 | not-started | 5 | 可再选中 |
+| 抠图 | 033 / 024 | 换背景 / 蒙版 | not-started | — | 与 crop 分开 |
+| 人像 / 画笔 | 034 / 035 | 调研 | not-started | — | 不实现 |
+| 质量 | 016～018 | 性能 / 测试 / 键盘 | not-started | 4 | 无泄漏、测试绿 |
 
 ### 5.1 已完成（做法摘要）
 
@@ -247,23 +247,38 @@ interface Command {
 
 ### 5.2 下一刀起（做法）
 
+**feat-036 · 美图顶栏与浅色壳**（已归档）  
+`EditorToolbar` 已改左（品牌+打开）/ 中（历史+撤销重做）/ 右（适配+保存）；Layout 与左 Tab 为浅底与粉红强调。不接线新业务。host 与 Application 不得因改肤色卸载。
+
 **feat-008 · 选择与变换**  
 点选 hitTest；overlay 画框与 8 向手柄 + 旋转点；`globalpointermove` + `toLocal`/`toGlobal`；改文档 `transform`。左键拖视口仍只在平移工具 / 空格 / 中键。风险：视口缩放后手柄必须在 world 空间算。任务号见 handbook `SEL-*`。
 
 **feat-009 · 图层面板**  
 右侧列表 = `layers` 倒序；显隐/锁定/重命名/拖拽排序；sync 按 id 增删改，禁止每帧拆建 Sprite。
 
-**feat-010 · 裁剪**  
-overlay 拉矩形，写入 `ImageLayer.crop`；mask 裁切；不破坏原 objectURL。可撤销依赖 feat-014 形态，本项先能改文档。
+**feat-010 · 【调整】裁剪**  
+overlay 拉矩形，写入 `ImageLayer.crop`；mask 裁切；不破坏原 objectURL。入口在调整面板。
 
-**feat-011 · 调色**  
-`ColorMatrixFilter` 绑 `filters`；滑条防抖写入文档；重置回 0。
+**feat-032 · 【调整】修改尺寸**  
+数字改显示宽高（可锁比例），写 `transform.scale*`，与手柄缩放同一真源。
+
+**feat-011 · 【滤镜调色】**  
+`ColorMatrixFilter` 绑 `filters`；滑条与预设防抖写入文档；重置回 0。
 
 **feat-012 · 文字**  
-点画布建 `TextLayer`；属性改 `text`/`fontSize`/`fill`；走同一套变换。
+点画布建 `TextLayer`；字号颜色；走同一套变换。不进当前六 Tab。
 
-**feat-013 · 标注**  
-矩形/椭圆/箭头/画笔 → `ShapeLayer`；画笔为 `points`；完成后可再选中。
+**feat-013 · 【素材】几何**  
+矩形、圆 → `ShapeLayer`；完成后可再选中。画笔不在本项（feat-035 调研）。
+
+**feat-026 · 【素材】贴纸**  
+内置/本地图形置入仍为 Layer。
+
+**feat-033 · 【抠图】**  
+手动修边缘 + 换背景；自动抠图写回同一模型。与 feat-024 蒙版分开。
+
+**feat-034 / 035 · 【人像】【画笔】**  
+只占位，先调研，不排期实现。
 
 **feat-014 · 历史**  
 `history/stack.ts`；变换、图层、滤镜、文字、裁剪均为 Command；Ctrl+Z/Y；连续拖拽合并为一条。
@@ -280,10 +295,11 @@ overlay 拉矩形，写入 `ImageLayer.crop`；mask 裁切；不破坏原 object
 
 ```
 003 → 004 → 005 → 006 → 007 → 008 → 009
-                                      ├─ 010 裁剪
-                                      ├─ 011 调色
+                                      ├─ 010/032 调整（裁剪/尺寸）
+                                      ├─ 011 滤镜调色
                                       ├─ 012 文字
-                                      ├─ 013 标注（也可在 008 后提前，但不建议）
+                                      ├─ 013/026 素材
+                                      ├─ 033 抠图（009 后，P2）
                                       └─ 014 历史 → 017 测试
 006 也可先做 015 导出草图，正式验收仍建议 009 之后
 005 之后即可并行准备 016 的销毁清单，验收放最后
@@ -294,17 +310,23 @@ graph TD
   F007[feat-007 视口 已完成] --> F008[feat-008 选择]
   F008 --> F009[feat-009 图层]
   F009 --> F010[feat-010 裁剪]
-  F009 --> F011[feat-011 滤镜]
+  F008 --> F032[feat-032 尺寸]
+  F009 --> F011[feat-011 滤镜调色]
   F009 --> F012[feat-012 文字]
-  F008 --> F013[feat-013 标注]
+  F008 --> F013[feat-013 素材几何]
+  F009 --> F013
+  F009 --> F026[feat-026 贴纸]
+  F009 --> F033[feat-033 抠图]
   F009 --> F014[feat-014 历史]
   F006[feat-006 导入 已完成] --> F015[feat-015 导出]
+  F009 --> F015
   F005[feat-005 Application 已完成] --> F016[feat-016 性能]
   F014 --> F017[feat-017 测试]
   F008 --> F018[feat-018 键盘]
+  F009 --> F018
 ```
 
-禁止同一会话改两项。008 未完成不要开 010/011。
+禁止同一会话改两项。008 未完成不要开 010/011/013/032。人像/画笔未调研完不要开 034/035 的实现 change。
 
 ---
 
@@ -342,11 +364,11 @@ graph TD
 | M0 壳 | 003–005 | 空白 WebGL 画布嵌在布局里 | 已达成 |
 | M1 能看 | 006 | 打开一张本地图 | 已达成 |
 | M2 能改 | 007–009 | 浏览、变换、图层列表 | 007 已达成；008–009 未做 |
-| M3 能编 | 010–013 | 裁剪、调色、文字、标注 | 未做 |
+| M3 能编 | 010–013、032 | 调整（裁剪/尺寸）、滤镜调色、文字、素材几何 | 未做 |
 | M4 能交 | 014–015 | 撤销 + 导出文件 | 未做 |
 | M5 能养 | 016–018 | 无泄漏、有测试、键盘可用 | 未做 |
 
-M1 即可内部试用；对外以 M4 为准。
+M1 即可内部试用；对外以 M4 为准。P2/P3（feat-023～030：特效、蒙版、分组、素材、多页、保存、高级导出、AI）见 `feature_list.json`，不挡 M4。
 
 ---
 

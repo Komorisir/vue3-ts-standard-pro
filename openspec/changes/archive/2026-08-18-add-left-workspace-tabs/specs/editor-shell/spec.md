@@ -1,8 +1,4 @@
-## Purpose
-
-Provides the editor's four-region application chrome and a stable canvas host so a renderer can attach later without the page collapsing.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Four-region editor chrome
 
@@ -53,32 +49,6 @@ The canvas region SHALL expose a dedicated host element that keeps a non-zero wi
 - **THEN** the same canvas host remains in the central region
 - **AND** the drawing surface is still attached to that host
 
-### Requirement: Empty-document hint on the host
-
-When no document image is shown, the canvas host SHALL display a hint that the user can drop an image or choose to open one. After a drawing surface is attached and the document is still empty, the hint MUST remain visible above that surface. After at least one image is imported, the hint MUST be hidden. Clicking the empty host or dropping a file onto it SHALL start import, except when the pan tool is active or the pointer is performing a pan gesture.
-
-#### Scenario: Empty host copy
-- **GIVEN** the editor page has no imported image
-- **WHEN** the user looks at the canvas host
-- **THEN** they see the hint to drop an image or click to open
-
-#### Scenario: Hint remains after the canvas is attached
-- **GIVEN** the editor page has no imported image
-- **AND** the drawing canvas is attached to the host
-- **WHEN** the user looks at the canvas host
-- **THEN** the hint is still visible
-
-#### Scenario: Hint hides after an image is imported
-- **GIVEN** the editor page has at least one imported image
-- **WHEN** the user looks at the canvas host
-- **THEN** the empty-document hint is not visible
-
-#### Scenario: Pan tool does not open the file picker
-- **GIVEN** the editor page has no imported image
-- **AND** the pan tool is active
-- **WHEN** the user clicks the canvas host
-- **THEN** the file picker does not open
-
 ### Requirement: Chrome regions do not create a renderer
 
 The top bar, left workspace (category tabs and workspace panel), and right side panel SHALL NOT initialize a WebGL or WebGPU renderer. Only the canvas host MAY display a drawing surface created by the engine lifecycle.
@@ -88,6 +58,8 @@ The top bar, left workspace (category tabs and workspace panel), and right side 
 - **WHEN** the view finishes loading
 - **THEN** the top bar, left workspace, and right panel contain no canvas created by this editor
 - **AND** any drawing canvas is inside the canvas host
+
+## ADDED Requirements
 
 ### Requirement: Left workspace category tabs
 

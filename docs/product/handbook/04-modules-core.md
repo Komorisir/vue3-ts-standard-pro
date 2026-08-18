@@ -43,7 +43,7 @@ overlay `Graphics` 画框与手柄；手柄视觉尺寸 `/ viewport.scale`。con
 
 ### 7. Vue / Pinia
 
-`selectLayer` / `clearSelection` / `updateLayerTransform`。UI 只亮「选择」工具，不 import pixi。
+`selectLayer` / `clearSelection` / `updateLayerTransform`。画布手柄是横切能力；【调整】面板的旋转/尺寸也写同一套 `transform`，不另起真源。UI 不 import pixi。
 
 ### 8. Engine
 
@@ -176,7 +176,9 @@ MVP：一张主图+变换。P1：多图、翻转、opacity。P2：圆角、边�
 
 ---
 
-## 11 裁剪模块
+## 11 裁剪模块（【调整】Tab）
+
+挂在左侧 **调整** 工作区，与旋转、修改尺寸同一面板分区，不进滤镜/素材。
 
 ### 1. 目标
 
@@ -241,7 +243,21 @@ TDD：crop 矩形与比例。手工：确认后仍可变换；取消恢复；导
 
 `CROP-001` 模型 · `CROP-002` 框 · `CROP-003` 拖拽 · `CROP-004` 比例 · `CROP-005` 确认 · `CROP-006` Undo · `CROP-007` 导出一致`
 
-feat-010。P1。依赖 feat-009（至少有图层 id）。
+feat-010。P1。依赖 feat-009（至少有图层 id）。入口：【调整】面板。
+
+---
+
+## 11b 旋转与修改尺寸（【调整】Tab）
+
+### 旋转 / 矫正
+
+画布手柄旋转属 feat-008。调整面板另提供 90° / 微调 / 矫正入口，**只改** `layer.transform.rotation`，不改视口。不新增第二套旋转模型。
+
+### 修改尺寸
+
+【建议新增】feat-032：用数字改选中图片的显示宽高（可锁比例），写 `transform.scaleX/Y`（相对 `naturalWidth/Height`），不是改视口、也不是改文件像素。导出分辨率仍按 world 边界（feat-015）。
+
+任务：`RSZ-001` 宽高与比例纯函数 · `RSZ-002` 调整面板输入 · `RSZ-003` 与手柄缩放一致。P1。依赖 feat-008。
 
 ---
 
@@ -297,65 +313,53 @@ feat-012。P1。
 
 ---
 
-## 13 标注模块
+## 13 素材几何绘制（【素材】Tab）
 
 ### 1. 目标
 
-矩形、椭圆、箭头、画笔作为 **独立 Scene 对象**（`ShapeLayer`），完成后可再选中。
+在 **素材** 工作区画矩形、圆/椭圆等，作为 **独立 `ShapeLayer`**，完成后可再选中。贴纸/图形置入见 05 章 feat-026，共用图层模型。
 
-不要把笔画烘焙进底图像素（除非用户显式「合并」，P3）。
+不要把图形烘焙进底图像素。多种画笔（硬度、橡皮）不在本项，见 feat-035 调研。
 
 ### 2. 成熟产品
 
-美图/Pixlr 有涂鸦；Figma 是矢量 shape；PS 形状层 vs 位图画笔。本仓库走 **矢量对象**（Figma/Canva 路线），马赛克可作特殊 shape 或滤镜。
+Figma/Canva 矢量 shape；美图素材里可拖贴纸也可画形状。本仓库走 **矢量对象**，与贴纸同属【素材】，不把几何塞进【调整】或【画笔】。
 
 ### 3. 范围
 
-MVP：rect / ellipse / arrow / path（画笔点列）。P1：描边色宽。P2：马赛克、高亮半透明。暂不：压感、自定义笔刷引擎。
+MVP：rect / ellipse（圆是锁比例的 ellipse）。P1：描边色宽。P2：箭头、正多边形。暂不：压感笔刷引擎（feat-035）。
 
 ### 4. 交互
 
-按下开始、移动加点、松开提交一层。
+素材面板选「矩形/圆」→ 画布拖出 → 松开提交一层。
 
 ### 5. 模型
 
-`ShapeLayer` + `points?: {x,y}[]`（世界或层局部，实现时固定一种并写进 design.md）。
+`ShapeLayer` + `shape: 'rect' | 'ellipse' | …`。坐标约定实现时写进 design.md，只选一种。
 
 ### 6. PixiJS
 
-`Graphics`。画笔不要每点一个 Graphics，一条 path 一个对象。
+`Graphics`。一种图元一个对象，不要每帧拆建。
 
 ### 7–9
 
-tools 收集点 → store 加层 → sync。一条 stroke = 一条 Command。
+tools 拖框 → store 加层 → sync。一条图形 = 一条 Command。
 
-### 10. 性能
+### 10–12
 
-超长 path 抽稀。【建议优化】pointermove 节流。
-
-### 11. 异常
-
-点击无移动：不产生空层或产生极短线段（在 design 里二选一）。
-
-### 12. 测试
-
-TDD：点列简化。手工：画完能选中再移动。
+TDD：图元默认尺寸与最小边。手工：画完能选中再变换。空拖不产生层（或极小矩形，design 里二选一）。
 
 ### 13. 任务
 
-`ANN-001` 模型 · `ANN-002` Graphics sync · `ANN-003` 矩形椭圆 · `ANN-004` 箭头 · `ANN-005` 画笔 · `ANN-006` 再选择`
+`SHP-001` 模型 · `SHP-002` Graphics sync · `SHP-003` 矩形 · `SHP-004` 圆/椭圆 · `SHP-005` 再选择`
 
-feat-013。P1。依赖 feat-008。
+feat-013。P1。依赖 feat-008。入口：【素材】面板。
 
 ---
 
-## 14 形状模块
+## 14 形状与贴纸的类型
 
-与标注共用 `ShapeLayer`。【建议优化】**不要**拆第二套类型。贴纸/SVG 走素材章，不走本章。
-
-MVP 即 13 的几何图元。P2：正多边形、星形。P3：SVG path 导入。
-
-任务并入 `ANN-*` / 后续 `SHP-010`。
+几何与贴纸置入后都是 Layer。【建议优化】**不要**为贴纸另起 Object 体系。贴纸/SVG 走 05 素材章 feat-026。箭头/星形并入后续 `SHP-010`。
 
 ---
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * 编辑器顶栏。
- * 「打开」导入图片，「适配」拟合视口；撤销 / 重做 / 导出仍为占位。
+ * 编辑器顶栏三分区：左文档、中历史、右交付。
+ * 「打开」导入图片，「适配」拟合视口；历史 / 撤销 / 重做 / 保存仍为占位。
  */
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -42,14 +42,23 @@ async function onFileChange(event: Event): Promise<void> {
 
 <template>
   <div class="editor-toolbar" data-testid="editor-toolbar">
-    <span class="editor-toolbar__title">编辑器</span>
-    <Space>
+    <div class="editor-toolbar__region editor-toolbar__region--document" data-testid="toolbar-region-document">
+      <span class="editor-toolbar__title">编辑器</span>
       <Button size="small" :disabled="!isViewportReady" @click="openPicker">打开</Button>
-      <Button disabled size="small">撤销</Button>
-      <Button disabled size="small">重做</Button>
-      <Button size="small" :disabled="!isViewportReady" @click="fitView">适配</Button>
-      <Button disabled size="small">导出</Button>
-    </Space>
+    </div>
+    <div class="editor-toolbar__region editor-toolbar__region--history" data-testid="toolbar-region-history">
+      <Space>
+        <Button disabled size="small">历史</Button>
+        <Button disabled size="small">撤销</Button>
+        <Button disabled size="small">重做</Button>
+      </Space>
+    </div>
+    <div class="editor-toolbar__region editor-toolbar__region--deliver" data-testid="toolbar-region-deliver">
+      <Space>
+        <Button size="small" :disabled="!isViewportReady" @click="fitView">适配</Button>
+        <Button disabled type="primary" size="small" data-testid="toolbar-save">保存</Button>
+      </Space>
+    </div>
     <input
       ref="fileInputRef"
       class="editor-toolbar__file"
@@ -62,15 +71,35 @@ async function onFileChange(event: Event): Promise<void> {
 
 <style scoped lang="less">
 .editor-toolbar {
-  display: flex;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  width: 100%;
   height: 100%;
+}
+
+.editor-toolbar__region {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+
+.editor-toolbar__region--document {
+  justify-content: flex-start;
+}
+
+.editor-toolbar__region--history {
+  justify-content: center;
+}
+
+.editor-toolbar__region--deliver {
+  justify-content: flex-end;
 }
 
 .editor-toolbar__title {
   font-weight: 600;
-  color: rgb(255 255 255 / 88%);
+  color: rgb(0 0 0 / 88%);
 }
 
 .editor-toolbar__file {

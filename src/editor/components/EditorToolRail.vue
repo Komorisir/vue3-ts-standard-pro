@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * 左侧工具栏。
- * 「平移」切换视口拖动手势；其余工具仍为占位。
+ * 调整工作区工具栏。
+ * 「平移」切换视口拖动手势；其余工具仍为占位。不负责工作区 Tab。
  */
 import { storeToRefs } from 'pinia'
 import { Button } from 'ant-design-vue'
