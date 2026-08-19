@@ -49,6 +49,7 @@ const tsConfig = {
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'declaration-no-important': 'off',
   },
 }
 

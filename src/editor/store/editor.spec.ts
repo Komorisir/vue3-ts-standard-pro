@@ -292,4 +292,44 @@ describe('useEditorStore', () => {
     store.selectCropRatio({ width: 1, height: 1 })
     expect(store.cropSessionDraft).toEqual({ x: 200, y: 100, width: 400, height: 400 })
   })
+
+  it('setComparingOriginal is ignored without a main image and resets on replace', () => {
+    setActivePinia(createPinia())
+    const store = useEditorStore()
+
+    store.setComparingOriginal(true)
+    expect(store.isComparingOriginal).toBe(false)
+
+    store.addImageLayer(makeLayer('layer-a', 'blob:http://localhost/a'))
+    store.setComparingOriginal(true)
+    expect(store.isComparingOriginal).toBe(true)
+
+    store.setComparingOriginal(false)
+    expect(store.isComparingOriginal).toBe(false)
+  })
+
+  it('addImageLayer clears the adjust command stack, compare preview, and crop session', () => {
+    setActivePinia(createPinia())
+    const revoke = vi.spyOn(URL, 'revokeObjectURL')
+    const store = useEditorStore()
+    store.addImageLayer(makeLayer('layer-a', 'blob:http://localhost/a'))
+    store.rotateMainByDegrees(90)
+    store.beginCropSession()
+    store.setComparingOriginal(true)
+
+    expect(store.canUndo).toBe(true)
+    expect(store.isCropSessionActive).toBe(true)
+    expect(store.isComparingOriginal).toBe(true)
+
+    store.addImageLayer(makeLayer('layer-b', 'blob:http://localhost/b'))
+
+    expect(store.layers.map(layer => layer.id)).toEqual(['layer-b'])
+    expect(store.canUndo).toBe(false)
+    expect(store.canRedo).toBe(false)
+    expect(store.isComparingOriginal).toBe(false)
+    expect(store.isCropSessionActive).toBe(false)
+    expect(store.layers[0]!.transform.rotation).toBe(0)
+
+    revoke.mockRestore()
+  })
 })

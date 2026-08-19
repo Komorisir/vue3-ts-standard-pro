@@ -11,6 +11,7 @@ import {
   CHROME_OVERLAY_MASK,
   CHROME_RADIUS_CARD,
   CHROME_RADIUS_CONTROL,
+  CHROME_RADIUS_PILL,
   CHROME_SPACE,
   CHROME_SUCCESS,
   CHROME_SURFACE,
@@ -27,8 +28,8 @@ import {
 
 describe('listToolbarRegions', () => {
   it('returns 文档、历史、交付 in that order', () => {
-    expect(listToolbarRegions().map(region => region.label)).toEqual(['文档', '历史', '交付'])
-    expect(listToolbarRegions().map(region => region.id)).toEqual(['document', 'history', 'deliver'])
+    expect(listToolbarRegions().map(region => region.label)).toEqual(['文档', '胶囊', '交付'])
+    expect(listToolbarRegions().map(region => region.id)).toEqual(['document', 'capsule', 'deliver'])
   })
 })
 
@@ -54,11 +55,12 @@ describe('chrome palette', () => {
 })
 
 describe('chrome scale', () => {
-  it('allows only 4/8/12/16 spacing, 11/12/13/14 type, and 6/8 radii', () => {
+  it('allows only 4/8/12/16 spacing, 11/12/13/14 type, and 6/8/16 radii', () => {
     expect(CHROME_SPACE).toEqual([4, 8, 12, 16])
     expect(CHROME_FONT_SIZE).toEqual({ caption: 11, body: 12, section: 13, brand: 14 })
     expect(CHROME_RADIUS_CONTROL).toBe(6)
     expect(CHROME_RADIUS_CARD).toBe(8)
+    expect(CHROME_RADIUS_PILL).toBe(16)
     expect(CHROME_FONT_FAMILY).toContain('PingFang SC')
     expect(CHROME_FONT_FAMILY).toContain('Microsoft YaHei')
   })
@@ -78,5 +80,6 @@ describe('chrome mappings', () => {
     expect(vars['--chrome-host-bg']).toBe(CHROME_HOST_BACKGROUND)
     expect(vars['--chrome-text']).toBe(CHROME_TEXT)
     expect(vars['--chrome-overlay-mask']).toBe(CHROME_OVERLAY_MASK)
+    expect(vars['--chrome-radius-pill']).toBe('16px')
   })
 })

@@ -7,7 +7,7 @@
 
 ## 职责
 
-把 `{ x, y, scale }` 存在 Pinia，同步到 viewport Container。平移 / 滚轮缩放 / 适配只改视口，不改图层 `transform`。左键拖拽在平移工具、空格或中键时才平移，把左键留给 feat-008 选择。
+把 `{ x, y, scale }` 存在 Pinia，同步到 viewport Container。平移 / 滚轮缩放 / 适配只改视口，不改图层 `transform`。左键拖拽在顶栏「抓手」、空格或中键时才平移，把左键留给 feat-008 选择。
 
 ## 数据流
 

@@ -3,7 +3,7 @@
  * 只描述视觉真源与分区，不持有选中状态，不改文档，不接线撤销 / 导出。
  */
 
-export type ToolbarRegionId = 'document' | 'history' | 'deliver'
+export type ToolbarRegionId = 'document' | 'capsule' | 'deliver'
 
 export interface ToolbarRegion {
   id: ToolbarRegionId
@@ -31,7 +31,7 @@ export interface ChromeAntToken {
 
 const TOOLBAR_REGIONS: readonly ToolbarRegion[] = [
   { id: 'document', label: '文档' },
-  { id: 'history', label: '历史' },
+  { id: 'capsule', label: '胶囊' },
   { id: 'deliver', label: '交付' },
 ]
 
@@ -103,6 +103,9 @@ export const CHROME_RADIUS_CONTROL = 6
 /** 手风琴卡片圆角，单位 px。 */
 export const CHROME_RADIUS_CARD = 8
 
+/** 顶栏胶囊圆角，单位 px。 */
+export const CHROME_RADIUS_PILL = 16
+
 /** 壳层动效时长。 */
 export const CHROME_MOTION = '150ms'
 
@@ -113,7 +116,7 @@ export const CHROME_FONT_FAMILY =
 /**
  * 返回固定顺序的顶栏三分区副本。
  *
- * @returns 三区：文档、历史、交付
+ * @returns 三区：文档、胶囊、交付
  */
 export function listToolbarRegions(): ToolbarRegion[] {
   return TOOLBAR_REGIONS.map(region => ({ ...region }))
@@ -145,6 +148,7 @@ export function chromeCssVars(): Record<string, string> {
     '--chrome-overlay-grid': CHROME_OVERLAY_GRID,
     '--chrome-radius-control': `${CHROME_RADIUS_CONTROL}px`,
     '--chrome-radius-card': `${CHROME_RADIUS_CARD}px`,
+    '--chrome-radius-pill': `${CHROME_RADIUS_PILL}px`,
     '--chrome-motion': CHROME_MOTION,
     '--chrome-font': CHROME_FONT_FAMILY,
     '--chrome-font-caption': `${CHROME_FONT_SIZE.caption}px`,

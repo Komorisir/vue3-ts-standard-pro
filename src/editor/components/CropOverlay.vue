@@ -12,7 +12,8 @@ import { useEditorStore } from '@/editor/store/editor'
 const CROP_HANDLES: CropResizeHandle[] = ['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']
 
 const store = useEditorStore()
-const { isCropSessionActive, cropSessionDraft, isPanMode, mainImage, viewport } = storeToRefs(store)
+const { isCropSessionActive, cropSessionDraft, isPanMode, isComparingOriginal, mainImage, viewport } =
+  storeToRefs(store)
 const isDragging = ref(false)
 
 const layout = computed(() => {
@@ -94,7 +95,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    v-if="isCropSessionActive && layout"
+    v-if="isCropSessionActive && layout && !isComparingOriginal"
     class="crop-overlay"
     :style="{
       left: `${layout.stageLeft}px`,

@@ -54,6 +54,7 @@ export const useEditorStore = defineStore(StoreEnum.EDITOR, () => {
   const resizeEditStart = ref<{ width: number; height: number } | null>(null)
   const historyVersion = ref(0)
   const commandStack = createCommandStack()
+  const isComparingOriginal = ref(false)
 
   const isViewportReady = computed(() => viewWidth.value > 0 && viewHeight.value > 0)
   const isPanMode = computed(() => activeTool.value === 'pan' || spacePan.value)
@@ -89,6 +90,10 @@ export const useEditorStore = defineStore(StoreEnum.EDITOR, () => {
         revokeObjectUrl(existing.objectUrl)
       }
     }
+    resetAdjustDrafts()
+    isComparingOriginal.value = false
+    commandStack.clear()
+    historyVersion.value += 1
     fitView()
   }
 
@@ -204,6 +209,24 @@ export const useEditorStore = defineStore(StoreEnum.EDITOR, () => {
    */
   function setSpacePan(active: boolean): void {
     spacePan.value = active
+  }
+
+  /**
+   * 按住对比原图的视图态。无主图时强制为关。
+   *
+   * @param next 是否正在对比导入位图
+   */
+  function setComparingOriginal(next: boolean): void {
+    isComparingOriginal.value = Boolean(next) && layers.value.length > 0
+  }
+
+  function resetAdjustDrafts(): void {
+    cropSessionStart.value = null
+    cropSessionDraft.value = null
+    cropSessionTouched.value = false
+    cropSessionRatio.value = null
+    angleEditStart.value = null
+    resizeEditStart.value = null
   }
 
   function setMainCrop(crop?: CropRect): void {
@@ -423,12 +446,8 @@ export const useEditorStore = defineStore(StoreEnum.EDITOR, () => {
     viewport.value = { ...IDENTITY_VIEWPORT }
     activeTool.value = null
     spacePan.value = false
-    cropSessionStart.value = null
-    cropSessionDraft.value = null
-    cropSessionTouched.value = false
-    cropSessionRatio.value = null
-    angleEditStart.value = null
-    resizeEditStart.value = null
+    resetAdjustDrafts()
+    isComparingOriginal.value = false
     commandStack.clear()
     historyVersion.value += 1
   }
@@ -448,6 +467,7 @@ export const useEditorStore = defineStore(StoreEnum.EDITOR, () => {
     isPanMode,
     canUndo,
     canRedo,
+    isComparingOriginal,
     addImageLayer,
     setViewSize,
     panBy,
@@ -455,6 +475,7 @@ export const useEditorStore = defineStore(StoreEnum.EDITOR, () => {
     fitView,
     setActiveTool,
     setSpacePan,
+    setComparingOriginal,
     setMainCrop,
     beginCropSession,
     previewCrop,

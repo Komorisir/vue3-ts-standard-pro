@@ -1,11 +1,9 @@
 <script setup lang="ts">
 /**
  * 调整工作区主面板。
- * 保留平移，并把裁剪 / 旋转 / 改尺寸组织成互斥手风琴。
+ * 把裁剪 / 旋转 / 改尺寸组织成互斥手风琴；平移入口在顶栏胶囊。
  */
 import { ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { Button } from 'ant-design-vue'
 import { useEditorStore } from '@/editor/store/editor'
 import AdjustmentSection from './AdjustmentSection.vue'
 import CropPanel from './CropPanel.vue'
@@ -15,12 +13,7 @@ import RotatePanel from './RotatePanel.vue'
 type SectionId = 'crop' | 'rotate' | 'resize' | null
 
 const store = useEditorStore()
-const { activeTool } = storeToRefs(store)
 const expanded = ref<SectionId>(null)
-
-function togglePan(): void {
-  store.setActiveTool(activeTool.value === 'pan' ? null : 'pan')
-}
 
 function syncSection(next: SectionId): void {
   if (expanded.value === 'crop' && next !== 'crop') {
@@ -54,10 +47,6 @@ function onCropCancelled(): void {
 
 <template>
   <section class="adjustment-panel">
-    <div class="adjustment-panel__tool">
-      <Button block size="small" :type="activeTool === 'pan' ? 'primary' : 'default'" @click="togglePan">平移</Button>
-    </div>
-
     <AdjustmentSection title="裁剪" :expanded="expanded === 'crop'" @toggle="syncSection('crop')">
       <CropPanel @applied="onCropApplied" @cancelled="onCropCancelled" />
     </AdjustmentSection>
@@ -78,9 +67,5 @@ function onCropCancelled(): void {
   flex-direction: column;
   gap: 12px;
   padding: 12px;
-}
-
-.adjustment-panel__tool {
-  margin-bottom: 4px;
 }
 </style>

@@ -191,10 +191,25 @@ flowchart LR
 
 ## 10. 壳层模式
 
-### 10.1 顶栏
+### 10.1 顶栏（胶囊模式）
 
-左：品牌文案 + 打开。中：历史（可占位）+ 撤销 + 重做。右：适配 + 保存（primary）。  
-三列 grid：`1fr auto 1fr`。底部分割线用 `--chrome-border`。高度 52px，背景 `--chrome-surface`。
+> 完整交互与状态机见 [`toolbar-capsule-prd.md`](./toolbar-capsule-prd.md)。
+
+**结构：** 左「品牌 + 导入」、中「胶囊工具条」、右「导出」。三列 grid：`1fr auto 1fr`。底部分割线 `--chrome-border`。高度 52px，背景 `--chrome-surface`。
+
+| 区域 | 内容 | 说明 |
+|---|---|---|
+| 左 | 品牌「编辑器」+ 导入图标 | 仅此处与右区在胶囊外 |
+| 中 | 单颗胶囊 | 白底、1px `--chrome-border`、高度约 32px、圆角约 16px（`--chrome-radius-pill`） |
+| 右 | 导出图标 | `type="primary"`；feat-015 前 **disabled** 占位 |
+
+**胶囊内分组（固定顺序）：** 抓手 `|` 撤销 · 重做 `|` 对比原图 `|` 适配。组间 1px 竖线（`--chrome-border`），组内间距 8px。
+
+**控件形态：** 胶囊内与导入/导出均为 IconPark outline 16px + Ant Tooltip；**禁止**文字按钮（品牌字除外）。粘滞开关（抓手）选中用强调色；按住态（对比原图）按下时强调色。有快捷键的控件，Tooltip 须带键名（如 `抓手 空格`、`对比原图 \`）。禁用态须用 `--chrome-text-disabled` 明显变淡，禁止 `color: inherit` 盖掉禁用色。
+
+**平移入口：** 抓手在顶栏胶囊；**【调整】面板不再提供平移按钮**。空格暂切、中键平移行为不变（见 `viewport-navigation` spec）。
+
+**对比原图：** 按住胶囊按钮或 `\` 为视图态预览导入位图；不写文档、不进撤销栈；对比期间隐藏 DOM 裁剪 overlay。
 
 ### 10.2 左 Tab
 
@@ -315,11 +330,13 @@ DOM overlay 必须 `pointer-events` 只开在框与手柄上，遮罩区把事�
 | 素材 | `Pic` | 已用 |
 | 手风琴展开 | `Down` | 替换 `∨` |
 | 手风琴收起 | `Right` | 替换 `>` |
-| 撤销 | `Undo` | 顶栏可选 |
-| 重做 | `Redo` | 顶栏可选 |
-| 打开 | `FolderOpen` | 顶栏可选 |
-| 适配 | `FullScreen` | 语义接近即可 |
-| 保存 | `Save` | 顶栏可选 |
+| 导入 | `FolderOpen` | 顶栏左区 |
+| 抓手 | `Five` | 顶栏胶囊 |
+| 撤销 | `Undo` | 顶栏胶囊 |
+| 重做 | `Redo` | 顶栏胶囊 |
+| 对比原图 | `Contrast` | 顶栏胶囊；按住交互 |
+| 适配 | `FullScreen` | 顶栏胶囊 |
+| 导出 | `Save` | 顶栏右区；disabled 占位 |
 | 锁定比例 | `Lock` / `Unlock` | 改尺寸 |
 
 增补本地 SVG 时在本表追加一行，并注明路径。

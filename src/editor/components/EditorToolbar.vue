@@ -1,39 +1,29 @@
 <script setup lang="ts">
 /**
- * 编辑器顶栏三分区：左文档、中历史、右交付。
- * 「打开」导入图片，「适配」拟合视口；历史 / 撤销 / 重做 / 保存仍为占位。
+ * 编辑器顶栏：左品牌+导入，中胶囊，右导出占位。
+ * 导入接线文件选择器；导出本轮禁用。不 import pixi.js。
  */
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Button, Space } from 'ant-design-vue'
+import { Button, Tooltip } from 'ant-design-vue'
+import { FolderOpen, Save } from '@icon-park/vue-next'
 import { importImageFiles } from '@/editor/assets/loadLocalImage'
 import { ACCEPTED_IMAGE_ACCEPT } from '@/editor/model/imageFile'
 import { useEditorStore } from '@/editor/store/editor'
+import { useCompareOriginalShortcut } from '@/editor/tools/useCompareOriginalShortcut'
+import ToolbarCapsule from './ToolbarCapsule.vue'
 
 const fileInputRef = ref<HTMLInputElement | null>(null)
 const store = useEditorStore()
-const { canRedo, canUndo, isViewportReady } = storeToRefs(store)
+const { isViewportReady, isComparingOriginal } = storeToRefs(store)
+
+useCompareOriginalShortcut()
 
 function openPicker(): void {
-  if (!isViewportReady.value) {
+  if (!isViewportReady.value || isComparingOriginal.value) {
     return
   }
   fileInputRef.value?.click()
-}
-
-function fitView(): void {
-  if (!isViewportReady.value) {
-    return
-  }
-  store.fitView()
-}
-
-function undo(): void {
-  store.undo()
-}
-
-function redo(): void {
-  store.redo()
 }
 
 async function onFileChange(event: Event): Promise<void> {
@@ -52,20 +42,30 @@ async function onFileChange(event: Event): Promise<void> {
   <div class="editor-toolbar" data-testid="editor-toolbar">
     <div class="editor-toolbar__region editor-toolbar__region--document" data-testid="toolbar-region-document">
       <span class="editor-toolbar__title">编辑器</span>
-      <Button size="small" :disabled="!isViewportReady" @click="openPicker">打开</Button>
+      <Tooltip title="导入">
+        <span class="editor-toolbar__hit">
+          <Button
+            size="small"
+            :disabled="!isViewportReady || isComparingOriginal"
+            aria-label="导入"
+            @click="openPicker"
+          >
+            <FolderOpen theme="outline" :size="16" />
+          </Button>
+        </span>
+      </Tooltip>
     </div>
-    <div class="editor-toolbar__region editor-toolbar__region--history" data-testid="toolbar-region-history">
-      <Space>
-        <Button disabled size="small">历史</Button>
-        <Button size="small" :disabled="!canUndo" @click="undo">撤销</Button>
-        <Button size="small" :disabled="!canRedo" @click="redo">重做</Button>
-      </Space>
+    <div class="editor-toolbar__region editor-toolbar__region--capsule" data-testid="toolbar-region-capsule">
+      <ToolbarCapsule />
     </div>
     <div class="editor-toolbar__region editor-toolbar__region--deliver" data-testid="toolbar-region-deliver">
-      <Space>
-        <Button size="small" :disabled="!isViewportReady" @click="fitView">适配</Button>
-        <Button disabled type="primary" size="small" data-testid="toolbar-save">保存</Button>
-      </Space>
+      <Tooltip title="导出">
+        <span class="editor-toolbar__hit">
+          <Button disabled type="primary" size="small" aria-label="导出" data-testid="toolbar-export">
+            <Save theme="outline" :size="16" />
+          </Button>
+        </span>
+      </Tooltip>
     </div>
     <input
       ref="fileInputRef"
@@ -97,7 +97,7 @@ async function onFileChange(event: Event): Promise<void> {
   justify-content: flex-start;
 }
 
-.editor-toolbar__region--history {
+.editor-toolbar__region--capsule {
   justify-content: center;
 }
 
@@ -111,7 +111,19 @@ async function onFileChange(event: Event): Promise<void> {
   color: var(--chrome-text);
 }
 
+.editor-toolbar__hit {
+  display: inline-flex;
+}
+
 .editor-toolbar__file {
   display: none;
+}
+
+.editor-toolbar :deep(.ant-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  padding-inline: 0;
 }
 </style>

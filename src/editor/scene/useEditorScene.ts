@@ -38,7 +38,9 @@ export function useEditorScene(app: ShallowRef<Application | null>): void {
     if (!graph) {
       return
     }
-    await syncImageLayers(graph.content, store.layers)
+    await syncImageLayers(graph.content, store.layers, {
+      compareOriginal: store.isComparingOriginal,
+    })
   }
 
   watch(
@@ -95,7 +97,7 @@ export function useEditorScene(app: ShallowRef<Application | null>): void {
   )
 
   watch(
-    () => store.layers,
+    () => [store.layers, store.isComparingOriginal] as const,
     () => {
       void syncContent().catch(error => {
         console.error('useEditorScene: sync failed', error)

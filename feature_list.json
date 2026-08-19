@@ -158,6 +158,16 @@
       "evidence": "OpenSpec change add-editor-ui-spec。chromeTheme 双轨 TDD；ConfigProvider small + 中文 fontFamily；style.less 去掉 Vite 暗色残留；壳层去裸 hex；手风琴 IconPark Down/Right。Pixi background 仍为 host #ebebeb。./init.sh 通过；pnpm test:run 13 files / 63 tests。手工待浏览器确认 compact 控件、浅色壳与无字符箭头。"
     },
     {
+      "id": "feat-038",
+      "module": "toolbar",
+      "name": "顶栏胶囊与对比原图",
+      "description": "顶栏左导入 / 中胶囊（抓手、撤销重做、对比原图、适配）/ 右导出占位；调整面板移除平移；按住或 \\ 对比导入位图（视图态，不进文档与撤销栈）；换图清调整命令栈",
+      "priority": "P1",
+      "dependencies": ["feat-037", "feat-007", "feat-013"],
+      "status": "done",
+      "evidence": "OpenSpec change add-toolbar-capsule。顶栏胶囊 IconPark+Tooltip；抓手迁出调整面板；isComparingOriginal 视图态 + deriveImportCompareAppearance；换图清 commandStack。./init.sh 通过；pnpm test:run 14 files / 67 tests。手工待浏览器确认胶囊布局、按住对比、\\ 快捷键与裁剪 overlay 隐藏。"
+    },
+    {
       "id": "feat-014",
       "module": "toolbar",
       "name": "撤销重做",

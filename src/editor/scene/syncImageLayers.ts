@@ -4,6 +4,7 @@
  */
 import { Assets, Container, Graphics, Sprite } from 'pixi.js'
 import { spriteMaskRectFromCropRect } from '@/editor/model/imageAdjust'
+import { deriveImportCompareAppearance } from '@/editor/model/importCompare'
 import { visibleImageAnchor } from '@/editor/model/viewportMath'
 import type { EditorLayer, ImageLayer } from '@/editor/model/types'
 
@@ -16,10 +17,16 @@ function isImageLayer(layer: EditorLayer): layer is ImageLayer {
  *
  * @param content 场景 content 容器（sortableChildren）
  * @param layers 文档图层，数组末尾为顶层
+ * @param options.compareOriginal 为真时按导入位图外观绘制，不改文档
  */
-export async function syncImageLayers(content: Container, layers: readonly EditorLayer[]): Promise<void> {
+export async function syncImageLayers(
+  content: Container,
+  layers: readonly EditorLayer[],
+  options?: { compareOriginal?: boolean },
+): Promise<void> {
   const imageLayers = layers.filter(isImageLayer)
   const wantedIds = new Set(imageLayers.map(layer => layer.id))
+  const compareOriginal = Boolean(options?.compareOriginal)
 
   for (const child of [...content.children]) {
     if (!wantedIds.has(child.label)) {
@@ -30,7 +37,8 @@ export async function syncImageLayers(content: Container, layers: readonly Edito
 
   for (const [index, layer] of imageLayers.entries()) {
     try {
-      await applyImageLayer(content, layer, index)
+      const display = compareOriginal ? { ...layer, ...deriveImportCompareAppearance(layer) } : layer
+      await applyImageLayer(content, display, index)
     } catch (error) {
       console.error(`syncImageLayers: skip layer ${layer.id}`, error)
     }

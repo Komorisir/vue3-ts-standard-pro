@@ -9,7 +9,7 @@
 | 模块 | 文档 | 代码 | OpenSpec | feature |
 |---|---|---|---|---|
 | 分层与数据流 | [architecture.md](./architecture.md) | `src/editor/`、`src/shared/` | — | 全程 |
-| 路由与应用壳 | [shell.md](./shell.md) | `src/router/`、`src/layouts/`、`src/editor/components/` | `editor-router`、`editor-shell` | feat-003、004、031、036、037 |
+| 路由与应用壳 | [shell.md](./shell.md) | `src/router/`、`src/layouts/`、`src/editor/components/` | `editor-router`、`editor-shell` | feat-003、004、031、036、037、038 |
 | Pixi Application | [pixi-app.md](./pixi-app.md) | `src/editor/core/` | `pixi-application` | feat-005 |
 | 场景与导入 | [scene.md](./scene.md) | `src/editor/scene/`、`assets/`、`model/image*` | `scene-import` | feat-006 |
 | 视口平移缩放 | [viewport.md](./viewport.md) | `model/viewportMath.ts`、`tools/useViewportGestures.ts` | `viewport-navigation` | feat-007 |
