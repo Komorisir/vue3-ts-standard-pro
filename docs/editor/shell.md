@@ -1,9 +1,10 @@
 # 路由与应用壳
 
 - 模块：shell / chrome
-- feature：feat-003、feat-004、feat-031、feat-036
-- OpenSpec：`editor-router`、`editor-shell`（归档：`2026-08-18-add-left-workspace-tabs`）
-- 代码：`src/router/`、`src/layouts/EditorLayout.vue`、`src/views/editor/`、`src/editor/components/`、`src/editor/canvas/`、`src/editor/model/workspaceTabs.ts`、`src/editor/model/chromeTheme.ts`
+- feature：feat-003、feat-004、feat-031、feat-036、feat-037
+- OpenSpec：`editor-router`、`editor-shell`（归档：`2026-08-18-add-left-workspace-tabs`、`2026-08-19-add-editor-ui-spec`）
+- 代码：`src/router/`、`src/layouts/`、`src/views/editor/`、`src/editor/components/`、`src/editor/canvas/`、`src/editor/model/workspaceTabs.ts`、`src/editor/model/chromeTheme.ts`
+- UI 规范（人读全文，勿复制进主 spec）：[`../product/ui-spec.md`](../product/ui-spec.md)
 
 ## 职责
 

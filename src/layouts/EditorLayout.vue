@@ -4,7 +4,7 @@
  * 只负责占位、尺寸与壳层 CSS 变量，不创建 Application，不持有文档状态。
  */
 import { ConfigProvider, Layout } from 'ant-design-vue'
-import { CHROME_ACCENT, CHROME_HOST_BACKGROUND, CHROME_SURFACE, CHROME_TAB_RAIL } from '@/editor/model/chromeTheme'
+import { chromeAntTokens, chromeCssVars } from '@/editor/model/chromeTheme'
 
 const { Header, Sider, Content } = Layout
 
@@ -12,21 +12,14 @@ const { Header, Sider, Content } = Layout
 const LEFT_WORKSPACE_WIDTH = 284
 
 const chromeTheme = {
-  token: {
-    colorPrimary: CHROME_ACCENT,
-  },
+  token: chromeAntTokens(),
 }
 
-const chromeVars = {
-  '--chrome-accent': CHROME_ACCENT,
-  '--chrome-host-bg': CHROME_HOST_BACKGROUND,
-  '--chrome-surface': CHROME_SURFACE,
-  '--chrome-tab-rail': CHROME_TAB_RAIL,
-}
+const chromeVars = chromeCssVars()
 </script>
 
 <template>
-  <ConfigProvider :theme="chromeTheme">
+  <ConfigProvider component-size="small" :theme="chromeTheme">
     <Layout class="editor-layout" data-testid="editor-shell" :style="chromeVars">
       <Header class="editor-layout__header">
         <slot name="toolbar" />
@@ -51,7 +44,8 @@ const chromeVars = {
   position: fixed;
   inset: 0;
   height: 100%;
-  color: rgb(0 0 0 / 88%);
+  font-family: var(--chrome-font);
+  color: var(--chrome-text);
   background: var(--chrome-surface);
 }
 
@@ -61,9 +55,9 @@ const chromeVars = {
   height: 52px;
   padding-inline: 16px;
   line-height: 52px;
-  color: rgb(0 0 0 / 88%);
+  color: var(--chrome-text);
   background: var(--chrome-surface);
-  border-bottom: 1px solid rgb(0 0 0 / 6%);
+  border-bottom: 1px solid var(--chrome-border);
 }
 
 .editor-layout__body {
@@ -75,15 +69,15 @@ const chromeVars = {
 .editor-layout__side {
   overflow: auto;
   background: var(--chrome-surface);
-  border-color: rgb(0 0 0 / 6%);
+  border-color: var(--chrome-border);
 }
 
 .editor-layout__rail {
-  border-right: 1px solid rgb(0 0 0 / 6%);
+  border-right: 1px solid var(--chrome-border);
 }
 
 .editor-layout__side {
-  border-left: 1px solid rgb(0 0 0 / 6%);
+  border-left: 1px solid var(--chrome-border);
 }
 
 .editor-layout__rail :deep(.ant-layout-sider-children) {

@@ -63,8 +63,8 @@ function onCancel(): void {
 
 .crop-panel__title {
   margin: 0;
-  font-size: 12px;
-  color: rgb(0 0 0 / 45%);
+  font-size: var(--chrome-font-body);
+  color: var(--chrome-text-secondary);
 }
 
 .crop-panel__ratios {

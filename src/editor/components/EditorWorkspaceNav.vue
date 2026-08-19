@@ -52,6 +52,6 @@ function selectTab(id: WorkspaceTabId): void {
   width: 220px;
   min-width: 0;
   overflow: auto;
-  background: var(--chrome-surface, #fff);
+  background: var(--chrome-surface);
 }
 </style>

@@ -25,14 +25,14 @@ defineProps<{
 
 .workspace-placeholder__title {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--chrome-font-section);
   font-weight: 600;
-  color: rgb(0 0 0 / 88%);
+  color: var(--chrome-text);
 }
 
 .workspace-placeholder__hint {
   margin: 0;
-  font-size: 12px;
-  color: rgb(0 0 0 / 45%);
+  font-size: var(--chrome-font-body);
+  color: var(--chrome-text-secondary);
 }
 </style>

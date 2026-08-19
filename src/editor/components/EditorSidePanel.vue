@@ -30,14 +30,14 @@
 
 .editor-side-panel__title {
   margin: 0 0 8px;
-  font-size: 13px;
+  font-size: var(--chrome-font-section);
   font-weight: 600;
-  color: rgb(0 0 0 / 88%);
+  color: var(--chrome-text);
 }
 
 .editor-side-panel__hint {
   margin: 0;
-  font-size: 12px;
-  color: rgb(0 0 0 / 45%);
+  font-size: var(--chrome-font-body);
+  color: var(--chrome-text-secondary);
 }
 </style>

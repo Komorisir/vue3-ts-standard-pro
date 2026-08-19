@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CHROME_HOST_BACKGROUND } from '@/editor/model/chromeTheme'
+import { CHROME_ACCENT, CHROME_HOST_BACKGROUND } from '@/editor/model/chromeTheme'
 import { createPixiAppInitOptions, PIXI_APP_DESTROY_RENDERER, PIXI_APP_DESTROY_STAGE } from './pixiAppOptions'
 
 describe('createPixiAppInitOptions', () => {
@@ -12,6 +12,7 @@ describe('createPixiAppInitOptions', () => {
     expect(options.autoDensity).toBe(true)
     expect(options.background).toBe(CHROME_HOST_BACKGROUND)
     expect(options.background).toBe('#ebebeb')
+    expect(options.background).not.toBe(CHROME_ACCENT)
   })
 })
 

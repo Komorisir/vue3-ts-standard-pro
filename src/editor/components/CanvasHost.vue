@@ -90,7 +90,7 @@ async function onFileChange(event: Event): Promise<void> {
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  background: var(--chrome-host-bg, #ebebeb);
+  background: var(--chrome-host-bg);
 
   :deep(canvas) {
     position: absolute;
@@ -118,7 +118,7 @@ async function onFileChange(event: Event): Promise<void> {
   position: relative;
   z-index: 1;
   margin: 0;
-  color: rgb(0 0 0 / 45%);
+  color: var(--chrome-text-secondary);
   pointer-events: none;
 }
 </style>

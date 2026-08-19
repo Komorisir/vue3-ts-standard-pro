@@ -106,8 +106,9 @@ async function onFileChange(event: Event): Promise<void> {
 }
 
 .editor-toolbar__title {
+  font-size: var(--chrome-font-brand);
   font-weight: 600;
-  color: rgb(0 0 0 / 88%);
+  color: var(--chrome-text);
 }
 
 .editor-toolbar__file {

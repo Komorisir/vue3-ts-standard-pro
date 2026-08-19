@@ -68,6 +68,7 @@ function handleInput(field: 'width' | 'height', event: Event): void {
     <label class="resize-panel__field">
       <span>宽度</span>
       <Input
+        size="small"
         :disabled="disabled"
         :value="widthText"
         @focus="beginEdit"
@@ -79,6 +80,7 @@ function handleInput(field: 'width' | 'height', event: Event): void {
     <label class="resize-panel__field">
       <span>高度</span>
       <Input
+        size="small"
         :disabled="disabled"
         :value="heightText"
         @focus="beginEdit"
@@ -108,9 +110,9 @@ function handleInput(field: 'width' | 'height', event: Event): void {
 .resize-panel__field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 12px;
-  color: rgb(0 0 0 / 45%);
+  gap: 8px;
+  font-size: var(--chrome-font-body);
+  color: var(--chrome-text-secondary);
 }
 
 .resize-panel__actions {

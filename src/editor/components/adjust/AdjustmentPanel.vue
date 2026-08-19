@@ -76,7 +76,7 @@ function onCropCancelled(): void {
 .adjustment-panel {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   padding: 12px;
 }
 

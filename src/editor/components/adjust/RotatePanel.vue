@@ -64,6 +64,7 @@ function onCommit(): void {
     <label class="rotate-panel__angle">
       <span>自定义角度</span>
       <Input
+        size="small"
         :disabled="disabled"
         :value="angleText"
         @focus="onFocus"
@@ -91,8 +92,8 @@ function onCommit(): void {
 .rotate-panel__angle {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 12px;
-  color: rgb(0 0 0 / 45%);
+  gap: 8px;
+  font-size: var(--chrome-font-body);
+  color: var(--chrome-text-secondary);
 }
 </style>
