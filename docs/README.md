@@ -17,6 +17,7 @@
 
 1. 本页（地图）
 2. [`product/editor-plan.md`](./product/editor-plan.md) — 开发计划  
+   [`product/adjust-tab-phase1-prd.md`](./product/adjust-tab-phase1-prd.md) — 【调整】Tab 一期 PRD  
    [`product/handbook/`](./product/handbook/) — 功能架构与开发迭代手册（3～6 个月）
 3. [`editor/architecture.md`](./editor/architecture.md) — 分层与数据流
 4. 当前要改的模块（见 [`editor/README.md`](./editor/README.md)）

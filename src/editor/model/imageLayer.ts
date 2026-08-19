@@ -35,6 +35,8 @@ export function createImageLayer(input: CreateImageLayerInput): ImageLayer {
     objectUrl: input.objectUrl,
     naturalWidth: input.naturalWidth,
     naturalHeight: input.naturalHeight,
+    flipX: false,
+    flipY: false,
     transform: input.transform ?? { x: 0, y: 0, ...IDENTITY_SCALE },
   }
 }

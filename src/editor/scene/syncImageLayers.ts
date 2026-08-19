@@ -2,7 +2,9 @@
  * 按 layer.id 把文档图片层同步到 content。
  * 不重建整棵树，不把 Sprite 写回 store。
  */
-import { Assets, Container, Sprite } from 'pixi.js'
+import { Assets, Container, Graphics, Sprite } from 'pixi.js'
+import { spriteMaskRectFromCropRect } from '@/editor/model/imageAdjust'
+import { visibleImageAnchor } from '@/editor/model/viewportMath'
 import type { EditorLayer, ImageLayer } from '@/editor/model/types'
 
 function isImageLayer(layer: EditorLayer): layer is ImageLayer {
@@ -50,9 +52,39 @@ async function applyImageLayer(content: Container, layer: ImageLayer, zIndex: nu
     content.addChild(sprite)
   }
 
-  sprite.visible = layer.visible
-  sprite.position.set(layer.transform.x, layer.transform.y)
-  sprite.scale.set(layer.transform.scaleX, layer.transform.scaleY)
-  sprite.rotation = layer.transform.rotation
-  sprite.zIndex = zIndex
+  const imageSprite = sprite as Sprite
+  const anchor = visibleImageAnchor(layer)
+
+  imageSprite.visible = layer.visible
+  imageSprite.anchor.set(anchor.x, anchor.y)
+  imageSprite.position.set(layer.transform.x, layer.transform.y)
+  imageSprite.scale.set(
+    layer.transform.scaleX * (layer.flipX ? -1 : 1),
+    layer.transform.scaleY * (layer.flipY ? -1 : 1),
+  )
+  imageSprite.rotation = layer.transform.rotation
+  imageSprite.zIndex = zIndex
+
+  applyCropMask(imageSprite, layer)
+}
+
+function applyCropMask(sprite: Sprite, layer: ImageLayer): void {
+  if (!layer.crop) {
+    if (sprite.mask instanceof Graphics) {
+      sprite.mask.destroy()
+    }
+    sprite.mask = null
+    return
+  }
+
+  const previousMask = sprite.mask
+  const mask = previousMask instanceof Graphics ? previousMask : new Graphics()
+  const rect = spriteMaskRectFromCropRect(layer.crop)
+
+  mask.clear()
+  mask.rect(rect.x, rect.y, rect.width, rect.height).fill(0xffffff)
+  if (!(previousMask instanceof Graphics)) {
+    sprite.addChild(mask)
+  }
+  sprite.mask = mask
 }

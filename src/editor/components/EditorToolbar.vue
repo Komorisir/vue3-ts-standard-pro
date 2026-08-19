@@ -12,7 +12,7 @@ import { useEditorStore } from '@/editor/store/editor'
 
 const fileInputRef = ref<HTMLInputElement | null>(null)
 const store = useEditorStore()
-const { isViewportReady } = storeToRefs(store)
+const { canRedo, canUndo, isViewportReady } = storeToRefs(store)
 
 function openPicker(): void {
   if (!isViewportReady.value) {
@@ -26,6 +26,14 @@ function fitView(): void {
     return
   }
   store.fitView()
+}
+
+function undo(): void {
+  store.undo()
+}
+
+function redo(): void {
+  store.redo()
 }
 
 async function onFileChange(event: Event): Promise<void> {
@@ -49,8 +57,8 @@ async function onFileChange(event: Event): Promise<void> {
     <div class="editor-toolbar__region editor-toolbar__region--history" data-testid="toolbar-region-history">
       <Space>
         <Button disabled size="small">历史</Button>
-        <Button disabled size="small">撤销</Button>
-        <Button disabled size="small">重做</Button>
+        <Button size="small" :disabled="!canUndo" @click="undo">撤销</Button>
+        <Button size="small" :disabled="!canRedo" @click="redo">重做</Button>
       </Space>
     </div>
     <div class="editor-toolbar__region editor-toolbar__region--deliver" data-testid="toolbar-region-deliver">

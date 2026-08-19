@@ -13,6 +13,7 @@
 | Pixi Application | [pixi-app.md](./pixi-app.md) | `src/editor/core/` | `pixi-application` | feat-005 |
 | 场景与导入 | [scene.md](./scene.md) | `src/editor/scene/`、`assets/`、`model/image*` | `scene-import` | feat-006 |
 | 视口平移缩放 | [viewport.md](./viewport.md) | `model/viewportMath.ts`、`tools/useViewportGestures.ts` | `viewport-navigation` | feat-007 |
+| 调整：裁剪 / 旋转 / 改尺寸 | [image-adjust.md](./image-adjust.md) | `model/imageAdjust.ts`、`history/`、`components/adjust/` | `image-adjust` | feat-010、feat-032 |
 
 ## 待落地（占位，实现时再写）
 
@@ -20,8 +21,6 @@
 |---|---|---|
 | 选择与变换 | `transform.md` | feat-008 |
 | 图层模型与面板 | `layers.md` | feat-009 |
-| 矩形裁剪（调整） | `crop.md` | feat-010 |
-| 修改尺寸（调整） | `resize.md` | feat-032 |
 | 形状与 Alpha 蒙版 | `mask.md` | feat-024 |
 | 滤镜调色 | `filters.md` | feat-011 |
 | 文字图层 | `text.md` | feat-012 |

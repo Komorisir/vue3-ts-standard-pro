@@ -194,8 +194,8 @@
       "description": "调整 Tab：非破坏 Crop Model 写入 ImageLayer.crop；overlay 拉框确认/取消；原 objectURL 不变。椭圆/alpha 蒙版见 feat-024",
       "priority": "P1",
       "dependencies": ["feat-009"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "已归档 openspec/changes/archive/2026-08-19-add-adjust-tab-phase1。比例裁剪手风琴、非破坏 crop、overlay 遮罩/边中点/井字格。主 spec image-adjust 新建，editor-shell 已同步。pnpm test:run 13 files / 60 tests；lint/build 通过。浏览器手工验收仍待补。"
     },
     {
       "id": "feat-032",
@@ -204,8 +204,8 @@
       "description": "调整 Tab：数字改显示宽高，可锁比例，写 transform.scaleX/Y；与手柄缩放同一真源。不改视口、不改原图像素文件",
       "priority": "P1",
       "dependencies": ["feat-008"],
-      "status": "not-started",
-      "evidence": ""
+      "status": "done",
+      "evidence": "已归档 openspec/changes/archive/2026-08-19-add-adjust-tab-phase1。宽高输入、默认锁比例、px/in/cm、合法值预览、blur/Enter/收起单条提交。主 spec image-adjust 已同步。pnpm test:run 13 files / 60 tests；lint/build 通过。浏览器手工验收仍待补。"
     },
     {
       "id": "feat-011",

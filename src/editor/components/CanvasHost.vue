@@ -12,6 +12,7 @@ import { ACCEPTED_IMAGE_ACCEPT } from '@/editor/model/imageFile'
 import { useEditorScene } from '@/editor/scene/useEditorScene'
 import { useEditorStore } from '@/editor/store/editor'
 import { useViewportGestures } from '@/editor/tools/useViewportGestures'
+import CropOverlay from './CropOverlay.vue'
 
 const hostRef = ref<HTMLElement | null>(null)
 const fileInputRef = ref<HTMLInputElement | null>(null)
@@ -73,6 +74,7 @@ async function onFileChange(event: Event): Promise<void> {
       @click.stop
     />
     <p v-if="showHint" class="canvas-host__hint">{{ EMPTY_DOCUMENT_HINT }}</p>
+    <CropOverlay />
   </div>
 </template>
 
@@ -87,6 +89,7 @@ async function onFileChange(event: Event): Promise<void> {
   min-width: 1px;
   height: 100%;
   min-height: 0;
+  overflow: hidden;
   background: var(--chrome-host-bg, #ebebeb);
 
   :deep(canvas) {

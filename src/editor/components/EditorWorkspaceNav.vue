@@ -10,7 +10,7 @@ import {
   listWorkspaceTabs,
   type WorkspaceTabId,
 } from '@/editor/model/workspaceTabs'
-import EditorToolRail from './EditorToolRail.vue'
+import AdjustmentPanel from './adjust/AdjustmentPanel.vue'
 import EditorWorkspacePlaceholder from './EditorWorkspacePlaceholder.vue'
 import EditorWorkspaceTabs from './EditorWorkspaceTabs.vue'
 
@@ -31,7 +31,7 @@ function selectTab(id: WorkspaceTabId): void {
   <div class="workspace-nav" data-testid="editor-workspace-nav">
     <EditorWorkspaceTabs :selected-id="selectedId" @select="selectTab" />
     <div class="workspace-nav__panel" data-testid="editor-workspace-panel">
-      <EditorToolRail v-if="isWorkspaceImplemented(selectedId)" />
+      <AdjustmentPanel v-if="isWorkspaceImplemented(selectedId)" />
       <EditorWorkspacePlaceholder v-else :title="selectedLabel" />
     </div>
   </div>

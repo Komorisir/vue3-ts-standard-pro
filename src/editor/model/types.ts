@@ -25,11 +25,21 @@ export interface BaseLayer {
   transform: Transform2D
 }
 
+export interface CropRect {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 export interface ImageLayer extends BaseLayer {
   kind: 'image'
   objectUrl: string
   naturalWidth: number
   naturalHeight: number
+  crop?: CropRect
+  flipX?: boolean
+  flipY?: boolean
 }
 
 export type EditorLayer = ImageLayer
